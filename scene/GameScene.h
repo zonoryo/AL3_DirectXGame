@@ -4,7 +4,6 @@
 #include "DirectXCommon.h"
 #include "Input.h"
 #include "Model.h"
-#include "Player.h"
 #include "SafeDelete.h"
 #include "Sprite.h"
 #include "ViewProjection.h"
@@ -49,12 +48,15 @@ private: // メンバ変数
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
-	// テクスチャハンドル
-	uint32_t textureHandle_ = 0;
-	// 3Dモデル
-	Model* model_ = nullptr;
-	// ビュープロジェクション
-	ViewProjection viewProjection_;
-	// 自キャラ
-	Player* player_ = nullptr;
+
+	// 2-1～
+	uint32t textureHandle = 0;
+	// Sprite* sprite = nullptr;
+	ViewProjection viewProjection;
+	Model* model = nullptr;
+	Player* player = nullptr;
+
+	// 2-2～
+	bool isDebugCameraActve = false;
+	DebugCamera* debugCamera = nullptr;
 };
