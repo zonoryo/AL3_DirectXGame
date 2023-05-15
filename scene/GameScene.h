@@ -9,6 +9,9 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 
+#include "Player.h"
+#include <DebugCamera.h>
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -49,14 +52,14 @@ private: // メンバ変数
 	/// ゲームシーン用
 	/// </summary>
 
-	// 2-1～
-	uint32t textureHandle = 0;
-	// Sprite* sprite = nullptr;
-	ViewProjection viewProjection;
-	Model* model = nullptr;
-	Player* player = nullptr;
+	
+	uint32_t textureHandle_ = 0;
+	
+	ViewProjection viewProjection_;
+	Model* model_ = nullptr;
+	Player* player_ = nullptr;
 
-	// 2-2～
-	bool isDebugCameraActve = false;
-	DebugCamera* debugCamera = nullptr;
+	
+	bool isDebugCameraActve_ = false;
+	DebugCamera* debugCamera_ = nullptr;
 };
