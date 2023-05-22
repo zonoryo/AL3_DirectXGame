@@ -3,6 +3,7 @@
 #include "Model.h"
 #include "WorldTransform.h"
 #include <Input.h>
+#include "PlayerBullet.h"
 
 
 class Player {
@@ -16,6 +17,12 @@ public:
 
 	// 描画
 	void Draw(ViewProjection&viewProjection);
+
+	// 旋回
+	void Rotate();
+
+	// 攻撃
+	void Attack();
 
 private:
 	// ワールド変換データ
@@ -33,4 +40,7 @@ private:
 
 	// キーボード入力
 	Input* input_ = nullptr;
+
+	//弾
+	PlayerBullet* bullet_ = nullptr;
 };
