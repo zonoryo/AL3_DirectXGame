@@ -19,6 +19,8 @@ public:
 	// 描画
 	void Draw(ViewProjection&viewProjection);
 
+	// 旋回
+	void Rotate();
 
 	// 攻撃
 	void Attack();
@@ -46,4 +48,6 @@ private:
 
 	//弾
 	PlayerBullet* bullet_ = nullptr;
+
+
 };

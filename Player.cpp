@@ -36,6 +36,15 @@ void Player::Update() {
 	} else if (input_->PushKey(DIK_DOWN)) {
 		move.y -= kCharacterSpeed;
 	}
+	//旋回
+	const float kRotSpeed = 0.02f;
+
+	if (input_->PushKey(DIK_D)) {
+		worldTransform_.rotation_.y += kRotSpeed;
+	}
+	if (input_->PushKey(DIK_A)) {
+		worldTransform_.rotation_.y -= kRotSpeed;
+	}
 	//キャラクターの攻撃処理
 	Attack();
 	//弾更新
@@ -86,7 +95,16 @@ void Player::Draw(ViewProjection&viewProjection) {
 	}
 }
 
+void Player::Rotate() { 
+	const float kRotSpeed = 0.02f;
 
+	if (input_->PushKey(DIK_D)) {
+		worldTransform_.rotation_.y += kRotSpeed;
+	}
+	if (input_->PushKey(DIK_A)) {
+		worldTransform_.rotation_.y -= kRotSpeed;
+	}
+}
 
 void Player::Attack() { 
 	if (input_->TriggerKey(DIK_SPACE)) {
@@ -98,14 +116,11 @@ void Player::Attack() {
 	}
 
 }
-	//if (bullet_) {
-	//	delete bullet_;
-	//	bullet_ = nullptr;
-	//}
+	
 	
 
 Player::~Player() {
 	for (PlayerBullet* bullet : bullets_) {
-		delete bullet_;
+		delete bullet;
 	}
 }
