@@ -81,7 +81,6 @@ void Player::Draw(ViewProjection&viewProjection) {
 
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
     //弾描画
-	
 	for (PlayerBullet* bullet : bullets_) {
 		bullet->Draw(viewProjection);
 	}
