@@ -4,6 +4,7 @@
 #include "WorldTransform.h"
 #include <Input.h>
 #include "PlayerBullet.h"
+#include <list>
 
 
 class Player {
@@ -23,6 +24,10 @@ public:
 
 	// 攻撃
 	void Attack();
+
+	~Player();
+
+	std::list<PlayerBullet*> bullets_;
 
 private:
 	// ワールド変換データ

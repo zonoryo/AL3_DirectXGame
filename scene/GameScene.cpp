@@ -9,7 +9,6 @@ GameScene::~GameScene() {
 	delete player_;
 	delete model_;
 
-	
 	delete debugCamera_;
 }
 

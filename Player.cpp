@@ -39,9 +39,12 @@ void Player::Update() {
 	//キャラクターの攻撃処理
 	Attack();
 	//弾更新
-	if (bullet_) {
-		bullet_->Update();
+	for (PlayerBullet* bullet : bullets_) {
+		bullet->Update();
 	}
+	/*if (bullet_) {
+		bullet_->Update();
+	}*/
 	// 範囲制限
 	const float kMoveLimitX = 34.0f;
 	const float kMoveLimitY = 18.0f;
@@ -78,8 +81,9 @@ void Player::Draw(ViewProjection&viewProjection) {
 
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
     //弾描画
-	if (bullet_) {
-		bullet_->Draw(viewProjection);
+	
+	for (PlayerBullet* bullet : bullets_) {
+		bullet->Draw(viewProjection);
 	}
 }
 
@@ -100,5 +104,18 @@ void Player::Attack() {
 		newBullet->Initialize(model_, worldTransform_.translation_);
 
 		bullet_ = newBullet;
+		bullets_.push_back(newBullet);
+	}
+
+}
+	//if (bullet_) {
+	//	delete bullet_;
+	//	bullet_ = nullptr;
+	//}
+	
+
+Player::~Player() {
+	for (PlayerBullet* bullet : bullets_) {
+		delete bullet_;
 	}
 }
