@@ -19,8 +19,6 @@ public:
 	// 描画
 	void Draw(ViewProjection&viewProjection);
 
-	// 旋回
-	void Rotate();
 
 	// 攻撃
 	void Attack();
