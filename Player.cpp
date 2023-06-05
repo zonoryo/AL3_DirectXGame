@@ -16,7 +16,14 @@ void Player::Initialize(Model* model, uint32_t textureHandle) {
 
 void Player::Update() {
 	worldTransform_.TransferMatrix();
-
+	//デスフラグの立った弾を削除
+	bullets_.remove_if([](PlayerBullet* bullet) {
+		if (bullet->IsDead()) {
+			delete bullet;
+			return true;
+		}
+		return false;
+	});
 	// キャラクターの移動ベクトル
 	Vector3 move = {0, 0, 0};
 
@@ -97,10 +104,15 @@ void Player::Draw(ViewProjection&viewProjection) {
 
 
 
+
 void Player::Attack() { 
+	const float kBulletSpeed = 1.0f;
+	Vector3 velocity(0, 0, kBulletSpeed);
+	                                                    //自キャラのワールド行列
+	velocity = TransformNormal(velocity,worldTransform_.matWorld_);
 	if (input_->TriggerKey(DIK_SPACE)) {
 		PlayerBullet* newBullet = new PlayerBullet();
-		newBullet->Initialize(model_, worldTransform_.translation_);
+		newBullet->Initialize(model_, worldTransform_.translation_,velocity);
 
 		bullet_ = newBullet;
 		bullets_.push_back(newBullet);
@@ -115,3 +127,17 @@ Player::~Player() {
 		delete bullet;
 	}
 }
+
+Vector3 Player::TransformNormal(const Vector3& v, const Matrix4x4& m) {
+	Vector3 result{
+
+	    v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0],
+
+	    v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1],
+
+	    v.x * m.m[0][2] + v.y * m.m[1][2] + v.z * m.m[2][2]};
+
+	return result;
+}
+
+

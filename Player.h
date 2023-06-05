@@ -27,6 +27,9 @@ public:
 
 	std::list<PlayerBullet*> bullets_;
 
+	Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m);
+	
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
@@ -47,5 +50,6 @@ private:
 	//弾
 	PlayerBullet* bullet_ = nullptr;
 
-
+	
+	
 };
