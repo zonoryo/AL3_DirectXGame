@@ -17,6 +17,7 @@ public:
 
 	Vector3 velocity_;
 
+
 private:
 	
 	WorldTransform would_;
