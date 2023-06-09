@@ -57,9 +57,7 @@ void Player::Update() {
 	for (PlayerBullet* bullet : bullets_) {
 		bullet->Update();
 	}
-	/*if (bullet_) {
-		bullet_->Update();
-	}*/
+
 	// 範囲制限
 	const float kMoveLimitX = 34.0f;
 	const float kMoveLimitY = 18.0f;

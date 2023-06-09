@@ -8,7 +8,7 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-
+#include "Enemy.h"
 #include "Player.h"
 #include <DebugCamera.h>
 
@@ -58,7 +58,7 @@ private: // メンバ変数
 	ViewProjection viewProjection_;
 	Model* model_ = nullptr;
 	Player* player_ = nullptr;
-
+	Enemy* enemy_ = nullptr;
 	
 	bool isDebugCameraActve_ = false;
 	DebugCamera* debugCamera_ = nullptr;

@@ -2,13 +2,14 @@
 #include "TextureManager.h"
 #include <cassert>
 #include "AxisIndicator.h"
+
 GameScene::GameScene() {}
 
 GameScene::~GameScene() {
 	
 	delete player_;
 	delete model_;
-
+	delete enemy_;
 	delete debugCamera_;
 }
 
@@ -29,6 +30,8 @@ void GameScene::Initialize() {
 
 	// 自キャラの生成
 	player_ = new Player();
+	//　敵の生成
+	enemy_ = new Enemy();
 
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_);
@@ -45,6 +48,8 @@ void GameScene::Update() {
 
 	debugCamera_->Update();
 
+	// 敵の更新
+	enemy_->Update();
 #ifdef _DEBUG
 	if (input_->TriggerKey(DIK_BACKSPACE)) {
 		isDebugCameraActve_ = true;
@@ -93,7 +98,8 @@ void GameScene::Draw() {
 
 	// 自キャラの描画
 	player_->Draw(viewProjection_);
-
+	// 敵の描画
+	enemy_->Draw(viewProjection_);
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion
