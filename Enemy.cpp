@@ -16,6 +16,26 @@ void Enemy::Update() {
 	would_.translation_.y -= velocity_.y;
 	would_.translation_.z -= velocity_.z;
 	would_.UpdateMatrix(); 
+	//状態遷移
+	switch (phase_) {
+	case Phase::Approach:
+	default:
+		//接近
+		/*would_.translation_.x += velocity_.x;
+		would_.translation_.y += velocity_.y;
+		would_.translation_.z += velocity_.z;*/
+		if (would_.translation_.z < 0.0f) {
+			phase_ = Phase::Leave;
+		}
+		break;
+	case Phase::Leave:
+		//離脱
+		would_.translation_.x += 10;
+		would_.translation_.y += 10;
+		would_.translation_.z += 10;
+		break;
+	}
+
 	
 }
 

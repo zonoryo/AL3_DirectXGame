@@ -18,11 +18,16 @@ public:
 
 	Vector3 velocity_;
 
+	enum class Phase {
+		Approach, //接近
+		Leave, //離脱
+	};
+	
 
 private:
 	
 	WorldTransform would_;
 	Model* model_;
 	uint32_t texturehandle_;
-
+	Phase phase_ = Phase::Approach;
 };
