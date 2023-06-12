@@ -59,7 +59,9 @@ private: // メンバ変数
 	Model* model_ = nullptr;
 	Player* player_ = nullptr;
 	Enemy* enemy_ = nullptr;
+	WorldTransform worldTransform_;
 	
+	Vector3 velocity_;
 	bool isDebugCameraActve_ = false;
 	DebugCamera* debugCamera_ = nullptr;
 };

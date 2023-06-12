@@ -2,6 +2,9 @@
 #include "TextureManager.h"
 #include <cassert>
 #include "AxisIndicator.h"
+#include "Enemy.h"
+#include "Vector3.h"
+
 
 GameScene::GameScene() {}
 
@@ -35,6 +38,10 @@ void GameScene::Initialize() {
 
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_);
+	// 敵の初期化
+	const float kEnemySpeed = 1.0f;
+	Vector3 velocity(0, 0, kEnemySpeed);
+	enemy_->Initialize(model_, {20,10,50}, velocity);
 
 	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);
 
@@ -49,7 +56,9 @@ void GameScene::Update() {
 	debugCamera_->Update();
 
 	// 敵の更新
-	enemy_->Update();
+	if (enemy_ != NULL) {
+		enemy_->Update();
+	}
 #ifdef _DEBUG
 	if (input_->TriggerKey(DIK_BACKSPACE)) {
 		isDebugCameraActve_ = true;
@@ -99,7 +108,9 @@ void GameScene::Draw() {
 	// 自キャラの描画
 	player_->Draw(viewProjection_);
 	// 敵の描画
-	enemy_->Draw(viewProjection_);
+	if (enemy_ != NULL) {
+		enemy_->Draw(viewProjection_);
+	}
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion
@@ -117,3 +128,5 @@ void GameScene::Draw() {
 
 #pragma endregion
 }
+
+
