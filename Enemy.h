@@ -23,4 +23,5 @@ private:
 	WorldTransform would_;
 	Model* model_;
 	uint32_t texturehandle_;
+
 };
