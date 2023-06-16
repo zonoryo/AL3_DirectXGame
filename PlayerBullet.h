@@ -10,6 +10,8 @@ public:
 	void Draw(ViewProjection& view);
 	Vector3 velocity_;
 	bool IsDead() const { return isDead_; }
+
+private:
 	WorldTransform would_;
 	Model* model_;
 	uint32_t texturehandle_;
