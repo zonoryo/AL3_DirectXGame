@@ -8,6 +8,7 @@ public:
 	void Initialize(Model* model, const Vector3& pos, const Vector3& velocity);
 	void Update();
 	void Draw(ViewProjection& view);
+	Vector3 velocity_;
 
 private:
 	WorldTransform would_;
