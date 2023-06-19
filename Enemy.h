@@ -4,6 +4,7 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "EnemyBullet.h"
+//class Player;
 
 class Enemy {
 public:
@@ -26,6 +27,15 @@ public:
 		Leave, //離脱
 	};
 	
+	~Enemy();
+
+	std::list<EnemyBullet*> enemybullets_;
+	//発射間隔
+	static const int kFireInterval = 60;
+	//接近フェーズ初期化
+	void Approach();
+
+	/*void SetPlayer(Player* player) { player_ = player; }*/
 
 private:
 	
@@ -34,5 +44,13 @@ private:
 	uint32_t texturehandle_;
 	Phase phase_ = Phase::Approach;
 
-	EnemyBullet* bullet_ = nullptr;
+	EnemyBullet* enemybullet_ = nullptr;
+
+	
+	int32_t EnemyBulletTimer_ = 0;
+
+	//自キャラ
+	//Player* player_ = nullptr;
+
+
 };

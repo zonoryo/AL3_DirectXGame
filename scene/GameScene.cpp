@@ -41,12 +41,15 @@ void GameScene::Initialize() {
 	// 敵の初期化
 	const float kEnemySpeed = 0.2f;
 	Vector3 velocity(0, 0, kEnemySpeed);
+	                          //敵の座標
 	enemy_->Initialize(model_, {20,10,50}, velocity);
 
 	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);
 
 	AxisIndicator::GetInstance()->SetVisible(true);
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
+
+	/*enemy_->SetPlayer(player_);*/
 }
 
 void GameScene::Update() {

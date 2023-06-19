@@ -28,7 +28,8 @@ public:
 	std::list<PlayerBullet*> bullets_;
 
 	Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m);
-	
+	//ワールド座標を取得
+	Vector3 GetWouldPosition();
 
 private:
 	// ワールド変換データ
