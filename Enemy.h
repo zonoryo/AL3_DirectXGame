@@ -4,7 +4,7 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "EnemyBullet.h"
-//class Player;
+class Player;
 
 class Enemy {
 public:
@@ -35,11 +35,13 @@ public:
 	//接近フェーズ初期化
 	void Approach();
 
-	/*void SetPlayer(Player* player) { player_ = player; }*/
+	void SetPlayer(Player* player) { player_ = player; }
+
+	Vector3 GetWouldPosition();
 
 private:
 	
-	WorldTransform would_;
+	WorldTransform world_;
 	Model* model_;
 	uint32_t texturehandle_;
 	Phase phase_ = Phase::Approach;
@@ -50,7 +52,7 @@ private:
 	int32_t EnemyBulletTimer_ = 0;
 
 	//自キャラ
-	//Player* player_ = nullptr;
+	Player* player_ = nullptr;
 
-
+	
 };
