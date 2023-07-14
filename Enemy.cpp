@@ -7,8 +7,8 @@ void Enemy::Initialize(Model* model, const Vector3& pos, const Vector3& velocity
 	assert(model);
 	model_ = model;
 	texturehandle_ = TextureManager::Load("GHOST.png");
-	world_.Initialize();
-	world_.translation_ = pos;
+	worldTransform_.Initialize();
+	worldTransform_.translation_ = pos;
 	velocity_ = velocity;
 	//Fire();
 	//接近フェーズ初期化
@@ -23,10 +23,10 @@ void Enemy::Update() {
 		}
 		return false;
 	});
-	world_.translation_.x -= velocity_.x;
-	world_.translation_.y -= velocity_.y;
-	world_.translation_.z -= velocity_.z;
-	world_.UpdateMatrix(); 
+	worldTransform_.translation_.x -= velocity_.x;
+	worldTransform_.translation_.y -= velocity_.y;
+	worldTransform_.translation_.z -= velocity_.z;
+	worldTransform_.UpdateMatrix(); 
 	//状態遷移
 	switch (phase_) {
 	case Phase::Approach:
@@ -36,7 +36,7 @@ void Enemy::Update() {
 		/*world_.translation_.x += velocity_.x;
 		world_.translation_.y += velocity_.y;
 		world_.translation_.z += velocity_.z;*/
-		if (world_.translation_.z < 0.0f) {
+		if (worldTransform_.translation_.z < 0.0f) {
 			phase_ = Phase::Leave;
 		}
 
@@ -48,9 +48,9 @@ void Enemy::Update() {
 		break;
 	case Phase::Leave:
 		//離脱
-		world_.translation_.x += 0.5;
-		world_.translation_.y += 0.5;
-		world_.translation_.z += 0.5;
+		worldTransform_.translation_.x += 0.5;
+		worldTransform_.translation_.y += 0.5;
+		worldTransform_.translation_.z += 0.5;
 		break;
 	}
 
@@ -61,7 +61,7 @@ void Enemy::Update() {
 }
 
 void Enemy::Draw(ViewProjection& view) { 
-  model_->Draw(world_, view, texturehandle_);
+  model_->Draw(worldTransform_, view, texturehandle_);
 	for (EnemyBullet* enemybullet : enemybullets_) {
 		enemybullet->Draw(view);
 	}
@@ -70,8 +70,8 @@ void Enemy::Draw(ViewProjection& view) {
 void Enemy::Fire() {
 	assert(player_);
 	const float kBulletSpeed = -1.0f;
-	Vector3 playerpos = player_->GetWouldPosition();
-	Vector3 enemypos = GetWouldPosition();
+	Vector3 playerpos = player_->GetWorldPosition();
+	Vector3 enemypos = GetWorldPosition();
 	Vector3 differencepos;
 	differencepos.x =playerpos.x - enemypos.x;
 	differencepos.y =playerpos.y - enemypos.y;
@@ -90,7 +90,7 @@ void Enemy::Fire() {
 
 	//Vector3 velocity(0, 0, kBulletSpeed);
 	EnemyBullet* newBullet = new EnemyBullet();
-	newBullet->Initialize(model_, world_.translation_, differencepos);
+	newBullet->Initialize(model_, worldTransform_.translation_, differencepos);
 
 	enemybullet_ = newBullet;
 	enemybullets_.push_back(newBullet);
@@ -107,12 +107,12 @@ Enemy::~Enemy() {
 void Enemy::Approach() { EnemyBulletTimer_ = kFireInterval; }
 
 
-Vector3 Enemy::GetWouldPosition() {
+Vector3 Enemy::GetWorldPosition() {
 	// ワールド座標を入れる変数
 	Vector3 worldPos;
 	// ワールド行列の平行移動成分を取得(ワールド座標)
-	worldPos.x = world_.translation_.x;
-	worldPos.y = world_.translation_.y;
-	worldPos.z = world_.translation_.z;
+	worldPos.x = worldTransform_.translation_.x;
+	worldPos.y = worldTransform_.translation_.y;
+	worldPos.z = worldTransform_.translation_.z;
 	return worldPos;
 }

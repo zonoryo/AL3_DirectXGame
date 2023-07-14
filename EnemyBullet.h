@@ -10,13 +10,18 @@ public:
 	void Draw(ViewProjection& view);
 	Vector3 velocity_;
 	bool IsDead() const { return isDead_; }
+	// 衝突を検出したら呼び出されるコールバック
+	void OnCollision();
+
+	Vector3 GetWorldPosition();
+	
 
 private:
-	WorldTransform would_;
+	WorldTransform worldTransform_;
 	Model* model_;
 	uint32_t texturehandle_;
 	// 寿命
-	static const int32_t kLifeTime =60 * 5;
+	static const int32_t kLifeTime = 60 * 5;
 	// デスタイマー
 	int32_t deathTimer_ = kLifeTime;
 	// デスフラグ

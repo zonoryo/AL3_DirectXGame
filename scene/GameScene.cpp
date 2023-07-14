@@ -1,4 +1,4 @@
-#include "GameScene.h"
+﻿#include "GameScene.h"
 #include "TextureManager.h"
 #include <cassert>
 #include "AxisIndicator.h"
@@ -14,6 +14,8 @@ GameScene::~GameScene() {
 	delete model_;
 	delete enemy_;
 	delete debugCamera_;
+	delete enemyBullet_;
+	delete playerBullet_;
 }
 
 void GameScene::Initialize() {
@@ -57,6 +59,9 @@ void GameScene::Update() {
 	player_->Update();
 
 	debugCamera_->Update();
+
+	//当たり判定の更新
+	CheckAllCollisions();
 
 	// 敵の更新
 	if (enemy_ != NULL) {
@@ -130,6 +135,91 @@ void GameScene::Draw() {
 	Sprite::PostDraw();
 
 #pragma endregion
+}
+
+void GameScene::CheckAllCollisions() {
+	//判定対象AとBの座標
+	Vector3 posA, posB;
+	//自弾リストの取得
+	const std::list<PlayerBullet*>& playerBullets = player_->GetBullets();
+	//敵弾リストの取得
+	const std::list<EnemyBullet*>& enemyBullets = enemy_->GetBullets();
+	#pragma region 自キャラと敵弾の当たり判定
+	posA = player_->GetWorldPosition();
+	for (EnemyBullet* bullet : enemyBullets) {
+		posB = bullet->GetWorldPosition();
+		// 座標 A・B の距離を求める
+		Vector3 dis;
+		dis.x = posA.x - posB.x;
+		dis.y = posA.y - posB.y;
+		dis.z = posA.z - posB.z;
+
+		float distance = sqrt((dis.x * dis.x) + (dis.y * dis.y) + (dis.z * dis.z));
+
+		if (distance <= 2) {
+			// 自キャラの衝突時コールバックを呼び出す
+			//player_->OnCollision();
+
+			// 敵弾の衝突時コールバックを呼び出す
+			bullet->OnCollision();
+		}
+	}
+	#pragma endregion
+
+	#pragma region 自弾と敵キャラの当たり判定
+	// 敵キャラの座標
+	posA = enemy_->GetWorldPosition();
+
+	// 敵キャラと敵弾全ての当たり判定
+	for (PlayerBullet* bullet : playerBullets) {
+		// 自弾の座標
+		posB = bullet->GetWorldPosition();
+
+		// 座標 A・B の距離を求める
+		Vector3 dis;
+		dis.x = posA.x - posB.x;
+		dis.y = posA.y - posB.y;
+		dis.z = posA.z - posB.z;
+
+		float distance = sqrt((dis.x * dis.x) + (dis.y * dis.y) + (dis.z * dis.z));
+
+		if (distance <= 2) {
+			// 敵キャラの衝突時コールバックを呼び出す
+			//enemy_->OnCollision();
+
+			// 自弾の衝突時コールバックを呼び出す
+			bullet->OnCollision();
+		}
+	}
+    #pragma endregion
+
+	#pragma region 自弾と敵弾の当たり判定
+	// 自弾と敵弾全ての当たり判定
+	for (PlayerBullet* bulletPlayer : playerBullets) {
+		posA = bulletPlayer->GetWorldPosition();
+
+		for (EnemyBullet* bulletEnemy : enemyBullets) {
+			// 自弾の座標
+			posB = bulletEnemy->GetWorldPosition();
+
+			// 座標 A・B の距離を求める
+			Vector3 dis;
+			dis.x = posA.x - posB.x;
+			dis.y = posA.y - posB.y;
+			dis.z = posA.z - posB.z;
+
+			float distance = sqrt((dis.x * dis.x) + (dis.y * dis.y) + (dis.z * dis.z));
+
+			if (distance <= 2) {
+				// 敵キャラの衝突時コールバックを呼び出す
+				bulletPlayer->OnCollision();
+
+				// 自弾の衝突時コールバックを呼び出す
+				bulletEnemy->OnCollision();
+			}
+		}
+	}
+    #pragma endregion
 }
 
 

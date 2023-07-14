@@ -22,14 +22,18 @@ public:
 
 	// 攻撃
 	void Attack();
+	//衝突を検出したら呼び出されるコールバック
+	void OnCollision();
 
 	~Player();
 
 	std::list<PlayerBullet*> bullets_;
-
+	
 	Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m);
 	//ワールド座標を取得
-	Vector3 GetWouldPosition();
+	Vector3 GetWorldPosition();
+	// 弾リストを取得
+	const std::list<PlayerBullet*>& GetBullets() const { return bullets_; }
 
 private:
 	// ワールド変換データ

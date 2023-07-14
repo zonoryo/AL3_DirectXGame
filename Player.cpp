@@ -137,7 +137,7 @@ Vector3 Player::TransformNormal(const Vector3& v, const Matrix4x4& m) {
 	return result;
 }
 
-Vector3 Player::GetWouldPosition() {
+Vector3 Player::GetWorldPosition() {
 	//ワールド座標を入れる変数
 	Vector3 worldPos;
 	//ワールド行列の平行移動成分を取得(ワールド座標)
