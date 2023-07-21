@@ -16,6 +16,8 @@ GameScene::~GameScene() {
 	delete debugCamera_;
 	delete enemyBullet_;
 	delete playerBullet_;
+	//delete skydome_;
+	delete modelSkydome_;
 }
 
 void GameScene::Initialize() {
@@ -30,13 +32,20 @@ void GameScene::Initialize() {
 	
 
 	viewProjection_.Initialize();
-
+	// スカイドームの初期化
+	skydome_->Initialize(modelSkydome_);
+	
 	model_ = Model::Create();
+
+	// 3Dモデルの生成
+	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
 
 	// 自キャラの生成
 	player_ = new Player();
 	//　敵の生成
 	enemy_ = new Enemy();
+	//天球の生成
+	skydome_ = new Skydome();
 
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_);
@@ -52,6 +61,8 @@ void GameScene::Initialize() {
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 
 	enemy_->SetPlayer(player_);
+	
+	
 }
 
 void GameScene::Update() {
@@ -62,6 +73,9 @@ void GameScene::Update() {
 
 	//当たり判定の更新
 	CheckAllCollisions();
+
+	// スカイドームの更新
+	skydome_->Update();
 
 	// 敵の更新
 	if (enemy_ != NULL) {
@@ -84,6 +98,7 @@ void GameScene::Update() {
 
 		viewProjection_.UpdateMatrix();
 	}
+
 }
 
 void GameScene::Draw() {
@@ -98,7 +113,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに背景スプライトの描画処理を追加できる
 	/// </summary>
-
+	
 	// スプライト描画後処理
 	Sprite::PostDraw();
 	// 深度バッファクリア
@@ -119,6 +134,8 @@ void GameScene::Draw() {
 	if (enemy_ != NULL) {
 		enemy_->Draw(viewProjection_);
 	}
+	// スカイドームの描画
+	skydome_->Draw(viewProjection_);
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion
@@ -135,6 +152,7 @@ void GameScene::Draw() {
 	Sprite::PostDraw();
 
 #pragma endregion
+	
 }
 
 void GameScene::CheckAllCollisions() {

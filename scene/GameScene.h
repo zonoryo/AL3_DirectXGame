@@ -12,6 +12,7 @@
 #include "Player.h"
 #include "EnemyBullet.h"
 #include "PlayerBullet.h"
+#include "Skydome.h"
 #include <DebugCamera.h>
 
 /// <summary>
@@ -62,14 +63,26 @@ private: // メンバ変数
 	uint32_t textureHandle_ = 0;
 	
 	ViewProjection viewProjection_;
+
 	Model* model_ = nullptr;
+
 	Player* player_ = nullptr;
+
 	Enemy* enemy_ = nullptr;
+
 	PlayerBullet* playerBullet_ = nullptr;
+
 	EnemyBullet* enemyBullet_ = nullptr;
+
 	WorldTransform worldTransform_;
-	
+
+	Skydome* skydome_ = nullptr;
+
+	Model* modelSkydome_ = nullptr;
+
 	Vector3 velocity_;
+
 	bool isDebugCameraActve_ = false;
+
 	DebugCamera* debugCamera_ = nullptr;
 };
