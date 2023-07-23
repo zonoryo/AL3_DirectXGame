@@ -62,6 +62,7 @@ void GameScene::Initialize() {
 	enemy_->SetPlayer(player_);
 	
 	
+	
 }
 
 void GameScene::Update() {

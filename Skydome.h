@@ -5,7 +5,7 @@ class Skydome {
 public:
 	void Initialize(Model* model);
 	void Update();
-	void Draw(ViewProjection& viewProjection_);
+	void Draw(ViewProjection&viewProjection_);
 
 private:
 	//ワールド変換データ
