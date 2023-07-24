@@ -29,8 +29,9 @@ void GameScene::Initialize() {
 	textureHandle_ = TextureManager::Load("sample.png");
 
 	
-
+	
 	viewProjection_.Initialize();
+	
 	
 	model_ = Model::Create();
 
@@ -43,8 +44,9 @@ void GameScene::Initialize() {
 	enemy_ = new Enemy();
 	//天球の生成
 	skydome_ = new Skydome();
-
-	// 自キャラの初期化
+	//スカイドームの初期化
+	skydome_->Initialize(modelSkydome_);
+	//自キャラの初期化
 	player_->Initialize(model_, textureHandle_);
 	// 敵の初期化
 	const float kEnemySpeed = 0.2f;
