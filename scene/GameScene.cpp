@@ -29,7 +29,7 @@ void GameScene::Initialize() {
 	textureHandle_ = TextureManager::Load("sample.png");
 
 	
-	
+	/*viewProjection_.farZ = 0;*/
 	viewProjection_.Initialize();
 	
 	
