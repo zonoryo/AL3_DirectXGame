@@ -31,8 +31,6 @@ void GameScene::Initialize() {
 	
 
 	viewProjection_.Initialize();
-	// スカイドームの初期化
-	skydome_->Initialize(modelSkydome_);
 	
 	model_ = Model::Create();
 
