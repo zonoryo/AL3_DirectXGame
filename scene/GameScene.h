@@ -14,7 +14,8 @@
 #include "PlayerBullet.h"
 #include "Skydome.h"
 #include "RailCamera.h"
-#include <DebugCamera.h>
+#include <sstream>
+#include "DebugCamera.h"
 
 
 /// <summary>
@@ -52,6 +53,15 @@ public: // メンバ関数
 	/// </summary>
 	void CheckAllCollisions();
 
+	//散弾を追加する
+	void AddEnemyBullet(EnemyBullet* enemyBullet);
+	//敵発生データの読み込み
+	void LoadEnemyPopDate();
+	//敵発生コマンドの更新
+	void UpdateEnemyPopCommands();
+
+	void AddEnemy(Vector3 pos);
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -70,11 +80,15 @@ private: // メンバ変数
 
 	Player* player_ = nullptr;
 
-	Enemy* enemy_ = nullptr;
+	//Enemy* enemy_ = nullptr;
 
 	PlayerBullet* playerBullet_ = nullptr;
 
 	EnemyBullet* enemyBullet_ = nullptr;
+
+	std::list<EnemyBullet*> enemybullets_;
+
+	std::list<Enemy*> enemy_;
 
 	WorldTransform worldTransform_;
 
@@ -89,4 +103,10 @@ private: // メンバ変数
 	DebugCamera* debugCamera_ = nullptr;
 
 	RailCamera* railCamera_ = nullptr;
+
+	std::stringstream enemyPopCommands;
+
+	bool waitFlag_ = false;
+
+	int32_t waitTimer_;
 };

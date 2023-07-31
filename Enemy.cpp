@@ -3,12 +3,13 @@
 #include "Player.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
-void Enemy::Initialize(Model* model, const Vector3& pos, const Vector3& velocity) {
+#include "GameScene.h"
+void Enemy::Initialize(Model* model,/* const Vector3& pos,*/ const Vector3& velocity) {
 	assert(model);
 	model_ = model;
 	texturehandle_ = TextureManager::Load("GHOST.png");
 	worldTransform_.Initialize();
-	worldTransform_.translation_ = pos;
+	//worldTransform_.translation_ = pos;
 	velocity_ = velocity;
 	//Fire();
 	//接近フェーズ初期化
@@ -16,13 +17,13 @@ void Enemy::Initialize(Model* model, const Vector3& pos, const Vector3& velocity
 }
 
 void Enemy::Update() { 
-	enemybullets_.remove_if([](EnemyBullet* enemybullet) {
+	/*enemybullets_.remove_if([](EnemyBullet* enemybullet) {
 		if (enemybullet->IsDead()) {
 			delete enemybullet;
 			return true;
 		}
 		return false;
-	});
+	});*/
 	worldTransform_.translation_.x -= velocity_.x;
 	worldTransform_.translation_.y -= velocity_.y;
 	worldTransform_.translation_.z -= velocity_.z;
@@ -54,17 +55,17 @@ void Enemy::Update() {
 		break;
 	}
 
-	for (EnemyBullet* enemybullet : enemybullets_) {
-		enemybullet->Update();
-	}
+	//for (EnemyBullet* enemybullet : enemybullets_) {
+	//	enemybullet->Update();
+	//}
 	
 }
 
-void Enemy::Draw(ViewProjection& view) { 
-  model_->Draw(worldTransform_, view, texturehandle_);
-	for (EnemyBullet* enemybullet : enemybullets_) {
-		enemybullet->Draw(view);
-	}
+void Enemy::Draw(ViewProjection& viewProjection) { 
+  model_->Draw(worldTransform_, viewProjection, texturehandle_);
+	/*for (EnemyBullet* enemybullet : enemybullets_) {
+		enemybullet->Draw(viewProjection);
+	}*/
 }
 
 void Enemy::Fire() {
@@ -93,15 +94,16 @@ void Enemy::Fire() {
 	newBullet->Initialize(model_, worldTransform_.translation_, differencepos);
 
 	enemybullet_ = newBullet;
-	enemybullets_.push_back(newBullet);
-	
+	/*enemybullets_.push_back(newBullet);
+	*/
+	gameScene_->AddEnemyBullet(newBullet);
 }
 
 Enemy::~Enemy() {
-	for (EnemyBullet* enemybullet : enemybullets_) {
+	/*for (EnemyBullet* enemybullet : enemybullets_) {
 
 		delete enemybullet;
-	}
+	}*/
 }
 
 void Enemy::Approach() { EnemyBulletTimer_ = kFireInterval; }

@@ -5,12 +5,12 @@
 #include "WorldTransform.h"
 #include "EnemyBullet.h"
 class Player;
-
+class GameScene;
 class Enemy {
 public:
 	// 初期化
 
-	void Initialize(Model* model, const Vector3& pos, const Vector3& velocity);
+	void Initialize(Model* model, /*const Vector3& pos,*/ const Vector3& velocity);
 
 	// 更新
 	void Update();
@@ -43,6 +43,8 @@ public:
 	// 弾リストを取得
 	const std::list<EnemyBullet*>& GetBullets() const { return enemybullets_; }
 
+	void SetGameScene(GameScene* gameScene) { gameScene_ = gameScene; }
+
 private:
 	
 	WorldTransform worldTransform_;
@@ -57,5 +59,6 @@ private:
 
 	//自キャラ
 	Player* player_ = nullptr;
-	
+	//ゲームシーン
+	GameScene* gameScene_ = nullptr;
 };
