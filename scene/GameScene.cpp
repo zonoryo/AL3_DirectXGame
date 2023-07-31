@@ -2,7 +2,6 @@
 #include "TextureManager.h"
 #include <cassert>
 #include "AxisIndicator.h"
-#include "Vector3.h"
 
 
 GameScene::GameScene() {}
@@ -69,10 +68,6 @@ void GameScene::Initialize() {
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 
 	enemy_->SetPlayer(player_);
-	
-	
-
-
 	
 }
 
