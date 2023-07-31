@@ -4,13 +4,13 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include "GameScene.h"
-void Enemy::Initialize(Model* model,/* const Vector3& pos,*/ const Vector3& velocity) {
+void Enemy::Initialize(Model* model, const Vector3& pos) {
 	assert(model);
 	model_ = model;
 	texturehandle_ = TextureManager::Load("GHOST.png");
 	worldTransform_.Initialize();
-	//worldTransform_.translation_ = pos;
-	velocity_ = velocity;
+	worldTransform_.translation_ = pos;
+	velocity_ = {-0.0f, 0.0f, 0.2f};
 	//Fire();
 	//接近フェーズ初期化
 	Approach();

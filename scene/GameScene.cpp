@@ -47,7 +47,8 @@ void GameScene::Initialize() {
 	// 自キャラの生成
 	player_ = new Player();
 
-	AddEnemy({0.0f, 5.0f, 30.0f});
+	//最初の雑魚
+	//AddEnemy({0.0f, 5.0f, 30.0f});
 
 	LoadEnemyPopDate();
 	//　敵の生成
@@ -65,12 +66,12 @@ void GameScene::Initialize() {
 	// レールカメラの生成
 	railCamera_ = new RailCamera();
 	//レールカメラ初期化
-	railCamera_->Initialize({0.0f, 0.0f, 1.0f}, {0.0f,0.0f,0.0f});
+	railCamera_->Initialize({0.0f, 0.0f, 0.0f}, {0.0f,0.0f,0.0f});
 	// 自キャラとレールカメラの親子関係を結ぶ
 	player_->SetParent(&railCamera_->GetWorldTransform());
 	// 敵の初期化
-	const float kEnemySpeed = 0.2f;
-	Vector3 velocity(0, 0, kEnemySpeed);
+	
+	//Vector3 velocity(-0.1f, 0.1f, -0.2f);
 	                          //敵の座標
 	//enemy_->Initialize(model_, {20,10,50}, velocity);
 	

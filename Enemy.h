@@ -10,7 +10,7 @@ class Enemy {
 public:
 	// 初期化
 
-	void Initialize(Model* model, /*const Vector3& pos,*/ const Vector3& velocity);
+	void Initialize(Model* model, const Vector3& pos);
 
 	// 更新
 	void Update();
