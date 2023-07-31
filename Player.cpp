@@ -3,14 +3,16 @@
 
 #include "ImGuiManager.h"
 
-void Player::Initialize(Model* model, uint32_t textureHandle) {
+void Player::Initialize(Model* model, uint32_t textureHandle, Vector3 pos) {
 	assert(model);
 	model_ = model;
 	textureHandle_ = textureHandle;
 	worldTransform_.Initialize();
 
+	worldTransform_.translation_ = pos;
 	// シングルトンインスタンスを取得する
 	input_ = Input::GetInstance();
+
 }
 
 void Player::Update() {
@@ -71,11 +73,13 @@ void Player::Update() {
 	// 座標移動 (ベクトルの加算)
 	worldTransform_.translation_.x += move.x; // ※数学の授業で作った関数を当てはめる
 	worldTransform_.translation_.y += move.y;
+	worldTransform_.UpdateMatrix();
 
-	worldTransform_.matWorld_ = MakeAffineMatrix(
+	//ここ消さないとworldTransform.cppで書いたことが上書きされて更新されてしまう
+	/*worldTransform_.matWorld_ = MakeAffineMatrix(
 	    worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
 
-	worldTransform_.TransferMatrix();
+	worldTransform_.TransferMatrix();*/
 
 	// キャラクターの座標を表示
 	ImGui::SetNextWindowPos({60, 60});
@@ -102,6 +106,8 @@ void Player::Draw(ViewProjection&viewProjection) {
 
 
 
+
+
 void Player::Attack() { 
 	const float kBulletSpeed = 1.0f;
 	Vector3 velocity(0, 0, kBulletSpeed);
@@ -109,7 +115,7 @@ void Player::Attack() {
 	velocity = TransformNormal(velocity,worldTransform_.matWorld_);
 	if (input_->TriggerKey(DIK_SPACE)) {
 		PlayerBullet* newBullet = new PlayerBullet();
-		newBullet->Initialize(model_, worldTransform_.translation_,velocity);
+		newBullet->Initialize(model_, GetWorldPosition(), velocity);
 
 		bullet_ = newBullet;
 		bullets_.push_back(newBullet);
@@ -141,8 +147,11 @@ Vector3 Player::GetWorldPosition() {
 	//ワールド座標を入れる変数
 	Vector3 worldPos;
 	//ワールド行列の平行移動成分を取得(ワールド座標)
-	worldPos.x = worldTransform_.translation_.x; 
-	worldPos.y = worldTransform_.translation_.y;
-	worldPos.z = worldTransform_.translation_.z;
+	worldPos.x = worldTransform_.matWorld_.m[3][0]; 
+	worldPos.y = worldTransform_.matWorld_.m[3][1];
+	worldPos.z = worldTransform_.matWorld_.m[3][2];
 	return worldPos;
 }
+
+
+void Player::SetParent(const WorldTransform* parent) { worldTransform_.parent_ = parent; }

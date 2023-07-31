@@ -11,15 +11,15 @@ class Player {
 public:
 	// 初期化
 
-	void Initialize(Model* model, uint32_t textureHandle);
+	void Initialize(Model* model, uint32_t textureHandle, Vector3 pos);
 
 	// 更新
 	void Update();
 
 	// 描画
 	void Draw(ViewProjection&viewProjection);
-
-
+	//親となるワールドトランスフォームをセット
+	void SetParent(const WorldTransform* parent);
 	// 攻撃
 	void Attack();
 	//衝突を検出したら呼び出されるコールバック

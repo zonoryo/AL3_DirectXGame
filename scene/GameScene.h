@@ -13,7 +13,9 @@
 #include "EnemyBullet.h"
 #include "PlayerBullet.h"
 #include "Skydome.h"
+#include "RailCamera.h"
 #include <DebugCamera.h>
+
 
 /// <summary>
 /// ゲームシーン
@@ -85,4 +87,6 @@ private: // メンバ変数
 	bool isDebugCameraActve_ = false;
 
 	DebugCamera* debugCamera_ = nullptr;
+
+	RailCamera* railCamera_ = nullptr;
 };
