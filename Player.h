@@ -5,6 +5,7 @@
 #include <Input.h>
 #include "PlayerBullet.h"
 #include <list>
+#include <Sprite.h>
 
 
 class Player {
@@ -14,7 +15,7 @@ public:
 	void Initialize(Model* model, uint32_t textureHandle, Vector3 pos);
 
 	// 更新
-	void Update();
+	void Update(ViewProjection& viewProjection);
 
 	// 描画
 	void Draw(ViewProjection&viewProjection);
@@ -24,6 +25,8 @@ public:
 	void Attack();
 	//衝突を検出したら呼び出されるコールバック
 	void OnCollision();
+	//UI描画
+	void DarwUI();
 
 	~Player();
 
@@ -39,7 +42,7 @@ private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
 
-	
+	WorldTransform worldTransform3DReticle_;
 
 	// モデル
 	Model* model_ = nullptr;
@@ -56,5 +59,6 @@ private:
 	PlayerBullet* bullet_ = nullptr;
 
 	
-	
+	//2Dレティクル用スプライト
+	Sprite* sprite2DReticle_ = nullptr;
 };

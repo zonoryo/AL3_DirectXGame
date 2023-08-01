@@ -90,7 +90,7 @@ void GameScene::Initialize() {
 void GameScene::Update() {
 	
 	// 自キャラの更新
-	player_->Update();
+	player_->Update(viewProjection_);
 
 	UpdateEnemyPopCommands();
 
@@ -200,7 +200,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
-
+	player_->DarwUI();
 	// スプライト描画後処理
 	Sprite::PostDraw();
 
