@@ -195,18 +195,7 @@ void Player::Draw(ViewProjection&viewProjection) {
 
 
 void Player::Attack() { 
-	//const float kBulletSpeed = 1.0f;
-	////Vector3 velocity(0, 0, kBulletSpeed);
-	//Vector3 velocity;
-	//velocity.x = worldTransform3DReticle_.translation_.x - worldTransform_.matWorld_.m[3][0];
-	//velocity.y = worldTransform3DReticle_.translation_.y - worldTransform_.matWorld_.m[3][1];
-	//velocity.z = worldTransform3DReticle_.translation_.z - worldTransform_.matWorld_.m[3][2];
     
-	//正規化
-	/*velocity = Normalize(velocity);
-	velocity.x *= kBulletSpeed;
-	velocity.y *= kBulletSpeed;
-	velocity.z *= kBulletSpeed;*/
 
 	//velocity = TransformNormal(velocity,worldTransform_.matWorld_);
 	if (input_->TriggerKey(DIK_SPACE)) {
