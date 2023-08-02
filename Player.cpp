@@ -208,7 +208,6 @@ void Player::Attack() {
 	velocity.y *= kBulletSpeed;
 	velocity.z *= kBulletSpeed;*/
 
-	//velocity = Normalize(velocity) * kBulletSpeed; // 自キャラのワールド行列
 	//velocity = TransformNormal(velocity,worldTransform_.matWorld_);
 	if (input_->TriggerKey(DIK_SPACE)) {
 		const float kBulletSpeed = 1.0f;
