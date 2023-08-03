@@ -39,7 +39,7 @@ void GameScene::Initialize() {
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_);
 	// 敵の初期化
-	const float kEnemySpeed = 1.0f;
+	const float kEnemySpeed = 0.15f;
 	Vector3 velocity(0, 0, kEnemySpeed);
 	enemy_->Initialize(model_, {20,10,50}, velocity);
 
