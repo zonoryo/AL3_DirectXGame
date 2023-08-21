@@ -15,6 +15,9 @@ void Enemy::Update() {
 	would_.translation_.x -= velocity_.x;
 	would_.translation_.y -= velocity_.y;
 	would_.translation_.z -= velocity_.z;
+	if (would_.translation_.x > 50 || would_.translation_.x < -50) {
+      velocity_.x*=-1;
+	}
 	would_.UpdateMatrix(); 
 	
 }

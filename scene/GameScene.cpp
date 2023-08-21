@@ -39,9 +39,9 @@ void GameScene::Initialize() {
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_);
 	// 敵の初期化
-	const float kEnemySpeed = 0.15f;
+	const float kEnemySpeed = 0.5f;
 	Vector3 velocity(kEnemySpeed, 0, 0);
-	enemy_->Initialize(model_, {20,0,50}, velocity);
+	enemy_->Initialize(model_, {20,-18,50}, velocity);
 
 	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);
 
