@@ -122,7 +122,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
-
+	player_->DarwUI();
 	// スプライト描画後処理
 	Sprite::PostDraw();
 

@@ -5,7 +5,7 @@
 #include <Input.h>
 #include "PlayerBullet.h"
 #include <list>
-
+#include <Sprite.h>
 
 class Player {
 public:
@@ -14,8 +14,8 @@ public:
 	void Initialize(Model* model, uint32_t textureHandle);
 
 	// 更新
-	void Update();
-
+	
+	void Update(ViewProjection& viewProjection);
 	// 描画
 	void Draw(ViewProjection&viewProjection);
 
@@ -34,6 +34,7 @@ private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
 
+	WorldTransform worldTransform3DReticle_;
 	
 
 	// モデル
@@ -50,6 +51,8 @@ private:
 	//弾
 	PlayerBullet* bullet_ = nullptr;
 
+	// 2Dレティクル用スプライト
+	Sprite* sprite2DReticle_ = nullptr;
 	
 	
 };
