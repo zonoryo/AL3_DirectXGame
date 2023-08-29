@@ -10,9 +10,10 @@ public:
 	void Draw(ViewProjection& view);
 	Vector3 velocity_;
 	bool IsDead() const { return isDead_; }
-	WorldTransform would_;
+	WorldTransform worldTransform_;
 	Model* model_;
 	uint32_t texturehandle_;
+	Vector3 GetWorldPosition();
 	//寿命
 	static const int32_t kLifeTime = 60 * 5;
 	//デスタイマー

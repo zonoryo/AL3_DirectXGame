@@ -22,13 +22,17 @@ public:
 
 	// 攻撃
 	void Attack();
+	// UI描画
+	void DarwUI();
 
 	~Player();
 
 	std::list<PlayerBullet*> bullets_;
 
 	Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m);
-	
+	Vector3 GetWorldPosition();
+	// 弾リストを取得
+	const std::list<PlayerBullet*>& GetBullets() const { return bullets_; }
 
 private:
 	// ワールド変換データ

@@ -18,11 +18,17 @@ public:
 
 	Vector3 velocity_;
 
+	// 衝突を検出したら呼び出されるコールバック
+	void OnCollision();
+
+	Vector3 GetWorldPosition();
+	bool IsDead() const { return isDead_; }
 
 private:
 	
-	WorldTransform would_;
+	WorldTransform worldTransform_;
 	Model* model_;
 	uint32_t texturehandle_;
-
+	// デスフラグ
+	bool isDead_ = false;
 };

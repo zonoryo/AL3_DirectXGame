@@ -1,6 +1,6 @@
 ﻿#include "Player.h"
 #include <cassert>
-
+#include "Matrix4x4.h"
 #include "ImGuiManager.h"
 
 void Player::Initialize(Model* model, uint32_t textureHandle) {
@@ -11,6 +11,12 @@ void Player::Initialize(Model* model, uint32_t textureHandle) {
 	worldTransform3DReticle_.Initialize();
 	// シングルトンインスタンスを取得する
 	input_ = Input::GetInstance();
+	// レティクル用テクスチャ取得
+	uint32_t textureReticle = TextureManager::Load("target.png");
+	// スプライト生成
+	sprite2DReticle_ = Sprite::Create(textureReticle, {640, 360}, {1, 1, 1, 1}, {0.5f, 0.5f});
+	// レティクルのテクスチャ
+	TextureManager::Load("target.png");
 }
 
 void Player::Update(ViewProjection& viewProjection) {
@@ -160,6 +166,7 @@ Player::~Player() {
 	for (PlayerBullet* bullet : bullets_) {
 		delete bullet;
 	}
+	delete sprite2DReticle_;
 }
 
 Vector3 Player::TransformNormal(const Vector3& v, const Matrix4x4& m) {
@@ -174,4 +181,12 @@ Vector3 Player::TransformNormal(const Vector3& v, const Matrix4x4& m) {
 	return result;
 }
 
-
+Vector3 Player::GetWorldPosition() {
+	// ワールド座標を入れる変数
+	Vector3 worldPos;
+	// ワールド行列の平行移動成分を取得(ワールド座標)
+	worldPos.x = worldTransform_.translation_.x;
+	worldPos.y = worldTransform_.translation_.y;
+	worldPos.z = worldTransform_.translation_.z;
+	return worldPos;
+}

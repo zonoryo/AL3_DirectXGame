@@ -42,6 +42,10 @@ public: // メンバ関数
 	/// 描画
 	/// </summary>
 	void Draw();
+	/// <summary>
+	/// 衝突判定と応答
+	/// </summary>
+	void CheckAllCollisions();
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
@@ -51,6 +55,8 @@ private: // メンバ変数
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
+	//複製敵リスト
+	std::list<Enemy*> enemies_;
 
 	
 	uint32_t textureHandle_ = 0;
@@ -60,7 +66,7 @@ private: // メンバ変数
 	Player* player_ = nullptr;
 	Enemy* enemy_ = nullptr;
 	WorldTransform worldTransform_;
-	
+	PlayerBullet* playerBullet_ = nullptr;
 	Vector3 velocity_;
 	bool isDebugCameraActve_ = false;
 	DebugCamera* debugCamera_ = nullptr;

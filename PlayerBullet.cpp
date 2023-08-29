@@ -4,20 +4,30 @@ void PlayerBullet::Initialize(Model* model, const Vector3& pos, const Vector3& v
 	assert(model);
 	model_ = model;
 	texturehandle_ = TextureManager::Load("cube.jpg");
-	would_.Initialize();
-	would_.translation_ = pos;
+	worldTransform_.Initialize();
+	worldTransform_.translation_ = pos;
 	velocity_ = velocity;
 }
 void PlayerBullet::Update() { 
-	would_.UpdateMatrix();
-	would_.translation_.x += velocity_.x;
-	would_.translation_.y += velocity_.y;
-	would_.translation_.z += velocity_.z;
+	worldTransform_.UpdateMatrix();
+	worldTransform_.translation_.x += velocity_.x;
+	worldTransform_.translation_.y += velocity_.y;
+	worldTransform_.translation_.z += velocity_.z;
 	//時間経過でデス
 	if (--deathTimer_ <= 0) {
 		isDead_ = true;
 	}
 }
 void PlayerBullet::Draw(ViewProjection& view) {
-	model_->Draw(would_, view, texturehandle_);
+	model_->Draw(worldTransform_, view, texturehandle_);
+}
+
+Vector3 PlayerBullet::GetWorldPosition() {
+	// ワールド座標を入れる変数
+	Vector3 worldPos;
+	// ワールド行列の平行移動成分を取得(ワールド座標)
+	worldPos.x = worldTransform_.translation_.x;
+	worldPos.y = worldTransform_.translation_.y;
+	worldPos.z = worldTransform_.translation_.z;
+	return worldPos;
 }

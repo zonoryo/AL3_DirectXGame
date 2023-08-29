@@ -45,3 +45,4 @@ Matrix4x4 MakeViewportMatrix(
     float left, float top, float width, float height, float minDepth, float maxDepth);
 
 Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix);
+
