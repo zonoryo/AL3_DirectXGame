@@ -3,14 +3,14 @@
 #include "Vector3.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-#include "EnemyBullet.h"
+
 class Player;
 class GameScene;
 class Enemy {
 public:
 	// 初期化
 
-	void Initialize(Model* model, const Vector3& pos);
+	void Initialize(Model* model, const Vector3& pos, const Vector3& velocity);
 
 	// 更新
 	void Update();
@@ -18,47 +18,18 @@ public:
 	// 描画
 	void Draw(ViewProjection& view);
 
-	void Fire();
-	// 衝突を検出したら呼び出されるコールバック
-	void OnCollision();
 	Vector3 velocity_;
 
-	enum class Phase {
-		Approach, //接近
-		Leave, //離脱
-	};
-	
-	~Enemy();
-
-	std::list<EnemyBullet*> enemybullets_;
-
-	//発射間隔
-	static const int kFireInterval = 60;
-	//接近フェーズ初期化
-	void Approach();
-
-	void SetPlayer(Player* player) { player_ = player; }
+	// 衝突を検出したら呼び出されるコールバック
+	void OnCollision();
 
 	Vector3 GetWorldPosition();
-	// 弾リストを取得
-	const std::list<EnemyBullet*>& GetBullets() const { return enemybullets_; }
-
-	void SetGameScene(GameScene* gameScene) { gameScene_ = gameScene; }
+	bool IsDead() const { return isDead_; }
 
 private:
-	
 	WorldTransform worldTransform_;
 	Model* model_;
 	uint32_t texturehandle_;
-	Phase phase_ = Phase::Approach;
-
-	EnemyBullet* enemybullet_ = nullptr;
-
-	
-	int32_t EnemyBulletTimer_ = 0;
-
-	//自キャラ
-	Player* player_ = nullptr;
-	//ゲームシーン
-	GameScene* gameScene_ = nullptr;
+	// デスフラグ
+	bool isDead_ = false;
 };

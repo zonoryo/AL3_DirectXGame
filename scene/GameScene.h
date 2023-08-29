@@ -10,7 +10,7 @@
 #include "WorldTransform.h"
 #include "Enemy.h"
 #include "Player.h"
-#include "EnemyBullet.h"
+
 #include "PlayerBullet.h"
 #include "Skydome.h"
 #include "RailCamera.h"
@@ -53,8 +53,7 @@ public: // メンバ関数
 	/// </summary>
 	void CheckAllCollisions();
 
-	//散弾を追加する
-	void AddEnemyBullet(EnemyBullet* enemyBullet);
+	
 	//敵発生データの読み込み
 	void LoadEnemyPopDate();
 	//敵発生コマンドの更新
@@ -83,10 +82,6 @@ private: // メンバ変数
 	//Enemy* enemy_ = nullptr;
 
 	PlayerBullet* playerBullet_ = nullptr;
-
-	EnemyBullet* enemyBullet_ = nullptr;
-
-	std::list<EnemyBullet*> enemybullets_;
 
 	std::list<Enemy*> enemy_;
 
