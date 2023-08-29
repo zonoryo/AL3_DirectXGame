@@ -142,9 +142,9 @@ void GameScene::Draw() {
 	// 敵の描画
 	
    for (Enemy* enemy : enemies_) {
-		//if (enemy != nullptr && !enemy->IsDead()) { // IsDead() メソッドを呼び出して判定
+		if (enemy != nullptr && !enemy->IsDead()) { // IsDead() メソッドを呼び出して判定
 			enemy->Draw(viewProjection_);
-		//}
+		}
 	}
 	
 	// 3Dオブジェクト描画後処理
