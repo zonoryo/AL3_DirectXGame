@@ -28,8 +28,9 @@ void Enemy::Draw(ViewProjection& view) {
 	}
   
 }
-
-void Enemy::OnCollision() { isDead_ = true; }
+void Enemy::OnCollision() {
+	isDead_ = true; // isDead_ フラグを true に設定
+}
 
 Vector3 Enemy::GetWorldPosition() { 
 // ワールド座標を入れる変数

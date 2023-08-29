@@ -53,7 +53,7 @@ void GameScene::Initialize() {
 		Enemy* newEnemy = new Enemy();
 
 		// 各敵の初期位置を計算して設定
-		Vector3 enemypos = Vector3(0.0f, -0.0f, 5.0f+i * offset);
+		Vector3 enemypos = Vector3(0.0f, -0.0f, 15.0f+i * offset);
 
 		const float kEnemySpeed = 0.5f;
 		Vector3 velocity(kEnemySpeed, 0, 0);
@@ -83,7 +83,11 @@ void GameScene::Update() {
 	// 敵の更新
 	for (Enemy* enemy : enemies_) {
 		if (enemy != NULL) {
-			enemy->Update();
+			 enemy->Update();
+			 if (enemy->IsDead()) {
+				 delete enemy;    // isDead_ フラグが true の敵を削除
+				 enemy = nullptr; // enemies_ リスト内のポインタを null にする
+			 }
 		}
 	}
 	
@@ -138,9 +142,9 @@ void GameScene::Draw() {
 	// 敵の描画
 	
    for (Enemy* enemy : enemies_) {
-		if (enemy != nullptr && !enemy->IsDead()) { // IsDead() メソッドを呼び出して判定
+		//if (enemy != nullptr && !enemy->IsDead()) { // IsDead() メソッドを呼び出して判定
 			enemy->Draw(viewProjection_);
-		}
+		//}
 	}
 	
 	// 3Dオブジェクト描画後処理
@@ -167,15 +171,16 @@ void GameScene::CheckAllCollisions() {
 	// 自弾リストの取得
 	const std::list<PlayerBullet*>& playerBullets = player_->GetBullets();
 
-	#pragma region 自弾と敵キャラの当たり判定
-	// 敵キャラの座標
-	posA = enemy_->GetWorldPosition();
+	for (Enemy* enemy : enemies_) {
+	
 
-	// 敵キャラと敵弾全ての当たり判定
+	// 敵キャラ全ての当たり判定
 	for (PlayerBullet* bullet : playerBullets) {
+			// 敵キャラの座標
+		posA = enemy->GetWorldPosition();
 		// 自弾の座標
 		posB = bullet->GetWorldPosition();
-
+		
 		// 座標 A・B の距離を求める
 		Vector3 dis;
 		dis.x = posA.x - posB.x;
@@ -185,12 +190,9 @@ void GameScene::CheckAllCollisions() {
 		float distance = sqrt((dis.x * dis.x) + (dis.y * dis.y) + (dis.z * dis.z));
 
 		if (distance <= 2) {
-			// 敵キャラの衝突時コールバックを呼び出す
-			 enemy_->OnCollision();
-
-			// 自弾の衝突時コールバックを呼び出す
-            //bullet->OnCollision();
+	    // 敵キャラの衝突時コールバックを呼び出す
+		enemy->OnCollision();
 		}
-	}
-#pragma endregion
+	  }
+  }
 }

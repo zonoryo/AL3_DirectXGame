@@ -20,4 +20,6 @@ public:
 	int32_t deathTimer_ = kLifeTime;
 	//デスフラグ
 	bool isDead_ = false;
+
+
 };
