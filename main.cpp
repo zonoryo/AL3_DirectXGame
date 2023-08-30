@@ -6,6 +6,9 @@
 #include "PrimitiveDrawer.h"
 #include "TextureManager.h"
 #include "WinApp.h"
+#include "Title.h"
+#include "GameClear.h"
+#include "failed.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -17,7 +20,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	AxisIndicator* axisIndicator = nullptr;
 	PrimitiveDrawer* primitiveDrawer = nullptr;
 	GameScene* gameScene = nullptr;
+	Title* title = nullptr;
+	GameClear* gameClear=nullptr;
+	failed* Failed = nullptr;
 
+	int scene = 0;
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
 	win->CreateGameWindow(L"GC2B_06_ドウゾノ_リョウタ_AL3");
@@ -56,11 +63,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	primitiveDrawer = PrimitiveDrawer::GetInstance();
 	primitiveDrawer->Initialize();
 #pragma endregion
+	//title = new Title();
+	//title->Initialize();
+	//// ゲームシーンの初期化
+	///*gameScene = new GameScene();
+	//gameScene->Initialize();*/
 
-	// ゲームシーンの初期化
-	gameScene = new GameScene();
-	gameScene->Initialize();
-
+ //   gameClear = new GameClear();
+	//gameClear->Initialize();
 	// メインループ
 	while (true) {
 		// メッセージ処理
@@ -72,8 +82,45 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		imguiManager->Begin();
 		// 入力関連の毎フレーム処理
 		input->Update();
-		// ゲームシーンの毎フレーム処理
-		gameScene->Update();
+		// タイトルの処理
+		if (scene == 0) {
+			//初期化
+			gameScene = new GameScene();
+			gameScene->Initialize();
+			title = new Title();
+			title->Initialize();
+			gameClear = new GameClear();
+			gameClear->Initialize();
+			Failed = new failed();
+			Failed->Initialize();
+			title->Update();
+			if (title->GetTonext()) {
+				scene = 1;
+			}
+		}
+		if (scene == 1) {
+			// ゲームシーンの毎フレーム処理
+			gameScene->Update();
+			if (gameScene->GetTonext()) {
+				scene = 2;
+			}
+			if (gameScene->GetNonext()) {
+				Failed->Update();
+				if (Failed->GetTonext()) {
+					scene = 0;
+				}
+			}
+		}
+		if (scene == 2) {
+			gameClear->Update();
+			if (gameClear->GetTonext()) {
+				scene = 0;
+			
+			}
+		}
+		
+
+
 		// 軸表示の更新
 		axisIndicator->Update();
 		// ImGui受付終了
@@ -81,8 +128,23 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		// 描画開始
 		dxCommon->PreDraw();
-		// ゲームシーンの描画
-		gameScene->Draw();
+		if (scene == 0) {
+			// タイトルの描画
+			title->Draw();
+		}
+		if (scene == 1) {
+			// ゲームシーンの描画
+			gameScene->Draw();
+		}
+		if (scene == 2) {
+		   //ゲームクリアの描画
+			gameClear->Draw();
+		}
+		if (gameScene->GetNonext()) {
+			Failed->Draw();
+		}
+
+		
 		// 軸表示の描画
 		axisIndicator->Draw();
 		// プリミティブ描画のリセット

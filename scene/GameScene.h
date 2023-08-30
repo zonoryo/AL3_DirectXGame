@@ -53,7 +53,9 @@ public: // メンバ関数
 	/// </summary>
 	void CheckAllCollisions();
 
-	
+	bool GetTonext() { return toNext_; }
+	//ゲームオーバー
+	bool GetNonext() { return noNext_; }
 	//敵発生データの読み込み
 	//void LoadEnemyPopDate();
 	//敵発生コマンドの更新
@@ -66,12 +68,17 @@ private: // メンバ変数
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
 
+	Sprite* sprite_ = nullptr;
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
+	bool toNext_ = false;
 
+	bool noNext_ = false;
 	
 	uint32_t textureHandle_ = 0;
+
+	uint32_t textureHandle_2 = 0;
 	
 	ViewProjection viewProjection_;
 
@@ -104,4 +111,6 @@ private: // メンバ変数
 	bool waitFlag_ = false;
 
 	int32_t waitTimer_;
+
+	int frameCounter_ = 0;
 };

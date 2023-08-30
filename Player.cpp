@@ -151,57 +151,45 @@ void Player::Draw(ViewProjection&viewProjection) {
 
 
 
-void Player::Attack() {
-	if (input_->TriggerKey(DIK_SPACE)) {
-		// 弾の速度
-		const float kBulletSpeed = 1.0f;
-		// Vector3 velocity(0, 0, kBulletSpeed);
-		Vector3 subtract;
-		subtract.x = worldTransform3DReticle_.matWorld_.m[3][0] - worldTransform_.matWorld_.m[3][0];
-		subtract.y = worldTransform3DReticle_.matWorld_.m[3][1] - worldTransform_.matWorld_.m[3][1];
-		subtract.z = worldTransform3DReticle_.matWorld_.m[3][2] - worldTransform_.matWorld_.m[3][2];
-		// 正規化
-		float lengh =
-		    sqrtf(subtract.x * subtract.x + subtract.y * subtract.y + subtract.z * subtract.z);
-		Vector3 dir;
-		dir.x = subtract.x / lengh;
-		dir.y = subtract.y / lengh;
-		dir.z = subtract.z / lengh;
-
-		Vector3 velocity;
-		velocity.x = dir.x * kBulletSpeed;
-		velocity.y = dir.y * kBulletSpeed;
-		velocity.z = dir.z * kBulletSpeed;
-
-		// 弾を生成し、初期化
-		PlayerBullet* newBullet = new PlayerBullet();
-		newBullet->Initialize(model_, GetWorldPosition(), velocity);
-
-		// 弾を登録する
-		bullets_.push_back(newBullet);
-	}
-}
-	
 //void Player::Attack() {
 //	const float kBulletSpeed = 1.0f;
 //	Vector3 velocity(0, 0, kBulletSpeed);
-//
-//	if (input_->TriggerKey(DIK_SPACE) && !isBulletShot_) {
-//		velocity = TransformNormal(velocity, worldTransform_.matWorld_);
-//
+//	// 自キャラのワールド行列
+//	velocity = TransformNormal(velocity, worldTransform_.matWorld_);
+//	if (input_->TriggerKey(DIK_SPACE)) {
 //		PlayerBullet* newBullet = new PlayerBullet();
 //		newBullet->Initialize(model_, GetWorldPosition(), velocity);
 //
+//		bullet_ = newBullet;
 //		bullets_.push_back(newBullet);
-//
-//		isBulletShot_ = true;
 //	}
 //
-//	velocity.x = worldTransform3DReticle_.matWorld_.m[3][0] - worldTransform_.matWorld_.m[3][0];
-//	velocity.y = worldTransform3DReticle_.matWorld_.m[3][1] - worldTransform_.matWorld_.m[3][1];
-//	velocity.z = worldTransform3DReticle_.matWorld_.m[3][2] - worldTransform_.matWorld_.m[3][2];
-//	velocity = Normalize(velocity) * kBulletSpeed;
-//}	
+//	//velocity.x = worldTransform3DReticle_.matWorld_.m[3][0] - worldTransform_.matWorld_.m[3][0];
+//	//velocity.y = worldTransform3DReticle_.matWorld_.m[3][1] - worldTransform_.matWorld_.m[3][1];
+//	//velocity.z = worldTransform3DReticle_.matWorld_.m[3][2] - worldTransform_.matWorld_.m[3][2];
+//	//velocity = Normalize(velocity) * kBulletSpeed;
+//}
+	
+void Player::Attack() {
+	const float kBulletSpeed = 7.0f;
+	Vector3 velocity(0, 0, kBulletSpeed);
+
+	if (input_->TriggerKey(DIK_SPACE) && !isBulletShot_) {
+		velocity = TransformNormal(velocity, worldTransform_.matWorld_);
+
+		PlayerBullet* newBullet = new PlayerBullet();
+		newBullet->Initialize(model_, GetWorldPosition(), velocity);
+
+		bullets_.push_back(newBullet);
+
+		isBulletShot_ = true;
+	}
+
+	velocity.x = worldTransform3DReticle_.matWorld_.m[3][0] - worldTransform_.matWorld_.m[3][0];
+	velocity.y = worldTransform3DReticle_.matWorld_.m[3][1] - worldTransform_.matWorld_.m[3][1];
+	velocity.z = worldTransform3DReticle_.matWorld_.m[3][2] - worldTransform_.matWorld_.m[3][2];
+	velocity = Normalize(velocity) * kBulletSpeed;
+}	
 
 void Player::DarwUI() { sprite2DReticle_->Draw(); }
 

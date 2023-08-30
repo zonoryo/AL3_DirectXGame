@@ -19,7 +19,9 @@ void PlayerBullet::Update() {
 	}
 }
 void PlayerBullet::Draw(ViewProjection& view) {
-	model_->Draw(worldTransform_, view, texturehandle_);
+	if (!isDead_) {
+		model_->Draw(worldTransform_, view, texturehandle_);
+	}
 }
 void PlayerBullet::OnCollision() { isDead_ = true; }
 
@@ -33,4 +35,4 @@ Vector3 PlayerBullet::GetWorldPosition() {
 	return worldPos;
 }
 
-void PlayerBullet::SetParent(const WorldTransform* parent) { worldTransform_.parent_ = parent; }
+//void PlayerBullet::SetParent(const WorldTransform* parent) { worldTransform_.parent_ = parent; }

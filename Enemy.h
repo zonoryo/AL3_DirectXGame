@@ -38,6 +38,6 @@ private:
 	// デスフラグ
 	bool isDead_ = false;
 
-	float radius_;
+	float radius_ = 2;
 	
 };

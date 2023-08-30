@@ -31,8 +31,9 @@ void GameScene::Initialize() {
 
 	// リソース
 	textureHandle_ = TextureManager::Load("sample.png");
-
-
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	textureHandle_2 = TextureManager::Load("Level1.png");
+	sprite_ = Sprite::Create(textureHandle_2, {0, 0});
 	
 	viewProjection_.Initialize();
 	
@@ -61,15 +62,15 @@ void GameScene::Initialize() {
 	//自キャラの初期化
 	Vector3 playerPosition(0, -5, 15);
 	player_->Initialize(model_, textureHandle_,playerPosition);
-	// レールカメラの生成
+	// レールカメラの生成/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	railCamera_ = new RailCamera();
-	//レールカメラ初期化
-	railCamera_->Initialize({0.0f, 0.0f, 0.0f});
+	//レールカメラ初期化//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	railCamera_->Initialize({0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f});
 	// 自キャラとレールカメラの親子関係を結ぶ
-	player_->SetParent(&railCamera_->GetWorldTransform());
+	//player_->SetParent(&railCamera_->GetWorldTransform());
 
-	playerBullet_->SetParent(&railCamera_->GetWorldTransform());
-	// 敵の初期化
+	//playerBullet_->SetParent(&railCamera_->GetWorldTransform());
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 敵の初期化
 	// ステージ1
 	const int EnemyCount = 3;
 	const float offset = 2.0f;
@@ -95,9 +96,9 @@ void GameScene::Initialize() {
 	}
 
 		// 敵とレールカメラの親子関係
-	for (Enemy* enemy : enemy_) {
+	/*for (Enemy* enemy : enemy_) {
 		enemy->SetParent(&railCamera_->GetWorldTransform());
-	}
+	}*/
 	
 	
 	//敵キャラにゲームシーンを渡す
@@ -141,7 +142,41 @@ void GameScene::Update() {
 			enemy->Update();
 		}
 	}
+	// クリア判定
+	bool allEnemiesDead = true; // すべての敵キャラが死亡しているかのフラグ
 
+	for (Enemy* enemy : enemy_) {
+		if (enemy != NULL) {
+			enemy->Update();
+			if (!enemy->IsDead()) {
+				allEnemiesDead = false; // まだ生きている敵キャラがいる
+			}
+		}
+	}
+
+	// 敵がすべて消えたらフレームカウンタを増加させる
+	if (allEnemiesDead&&noNext_==false) {
+		frameCounter_++;
+		
+		// フレームカウンタが90に達したら toNext_ を true に設定
+		if (frameCounter_ >= 90) {
+			toNext_ = true;
+		}
+	} else {
+		// 敵が生きている場合はフレームカウンタをリセット
+		frameCounter_ = 0;
+	}
+
+	if (!allEnemiesDead) {
+		const std::list<PlayerBullet*>& playerBullets = player_->GetBullets();
+		for (PlayerBullet* bullet : playerBullets) {
+			Vector3 bulletPos = bullet->GetWorldPosition();
+			if (bulletPos.z > 150.0f) {
+				noNext_ = true;
+				break; // 一度でも条件が成立したらループを抜ける
+			}
+		}
+	}
 
 #ifdef _DEBUG
 	if (input_->TriggerKey(DIK_BACKSPACE)) {
@@ -163,6 +198,8 @@ void GameScene::Update() {
 		viewProjection_.TransferMatrix();
 	
 	}
+
+	
 	
 }
 
@@ -217,6 +254,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
+	sprite_->Draw();
 	player_->DarwUI();
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -259,91 +297,5 @@ void GameScene::CheckAllCollisions() {
 #pragma endregion
 	}
 }
-
-//void GameScene::AddEnemy(Vector3 pos) {
-//	// 敵の生成
-//	Enemy* obj = new Enemy();
-//	// 敵の初期化
-//	obj->Initialize(model_, pos);
-//	// 敵キャラに自キャラのアドレスを渡す
-//	obj->SetPlayer(player_);
-//	// 敵キャラのゲームシーンを渡す
-//	obj->SetGameScene(this);
-//
-//	enemy_.push_back(obj);
-//}
-//void GameScene::LoadEnemyPopDate() { 
-//	//ファイルを開く
-//	std::ifstream file;
-//	file.open("Resources/enemyPos.csv");
-//	assert(file.is_open());
-//	//ファイルの内容を文字列ストリームにコピー
-//	enemyPopCommands << file.rdbuf();
-//	//ファイルを閉じる
-//	file.close();
-//}
-//
-//void GameScene::UpdateEnemyPopCommands() {
-//	// 待機処理
-//	if (waitFlag_ == true) {
-//		waitTimer_--;
-//		if (waitTimer_ <= 0) {
-//			// 待機完了
-//			waitFlag_ = false;
-//		}
-//		return;
-//	}
-//
-//	// 1行分の文字列を入れる変数
-//	std::string line;
-//
-//	// コマンド実行ループ
-//	while (getline(enemyPopCommands, line)) {
-//		// 1行分の文字列をストリームに変換して解析しやすくする
-//		std::istringstream line_stream(line);
-//
-//		std::string word;
-//		// ,区切りで行の先頭文字列を取得
-//		getline(line_stream, word, ',');
-//
-//		// "//"から始まる行はコメント
-//		if (word.find("//") == 0) {
-//			// コメント行を飛ばす
-//			continue;
-//		}
-//
-//		// POPコマンド
-//		if (word.find("POP") == 0) {
-//			// x座標
-//			getline(line_stream, word, ',');
-//			float x = (float)std::atof(word.c_str());
-//
-//			// y座標
-//			getline(line_stream, word, ',');
-//			float y = (float)std::atof(word.c_str());
-//
-//			// z座標
-//			getline(line_stream, word, ',');
-//			float z = (float)std::atof(word.c_str());
-//
-//			// 敵を発生させる
-//			AddEnemy(Vector3(x, y, z));
-//		}
-//		// WAITコマンド
-//		else if (word.find("WAIT") == 0) {
-//			getline(line_stream, word, ',');
-//
-//			// 待ち時間
-//			int32_t waitTime = atoi(word.c_str());
-//
-//			// 待機開始
-//			waitFlag_ = true;
-//			waitTimer_ = waitTime;
-//
-//			// コマンドループを抜ける
-//			break;
-//		}
-//	}
-//}
 
 
