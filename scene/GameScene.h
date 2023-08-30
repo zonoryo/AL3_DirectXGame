@@ -55,11 +55,11 @@ public: // メンバ関数
 
 	
 	//敵発生データの読み込み
-	void LoadEnemyPopDate();
+	//void LoadEnemyPopDate();
 	//敵発生コマンドの更新
-	void UpdateEnemyPopCommands();
+	//void UpdateEnemyPopCommands();
 
-	void AddEnemy(Vector3 pos);
+	//void AddEnemy(Vector3 pos);
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
@@ -99,7 +99,7 @@ private: // メンバ変数
 
 	RailCamera* railCamera_ = nullptr;
 
-	std::stringstream enemyPopCommands;
+	//std::stringstream enemyPopCommands;
 
 	bool waitFlag_ = false;
 

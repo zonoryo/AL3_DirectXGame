@@ -24,7 +24,7 @@ public:
 	// 攻撃
 	void Attack();
 	//衝突を検出したら呼び出されるコールバック
-	void OnCollision();
+	//void OnCollision();
 	//UI描画
 	void DarwUI();
 

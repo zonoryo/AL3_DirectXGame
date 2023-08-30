@@ -29,6 +29,9 @@ void Enemy::Draw(ViewProjection& view) {
 		model_->Draw(worldTransform_, view, texturehandle_);
 	}
 }
+void Enemy::SetParent(const WorldTransform* parent) {
+	 worldTransform_.parent_ = parent; 
+}
 void Enemy::OnCollision() {
 	isDead_ = true; // isDead_ フラグを true に設定
 }
@@ -43,3 +46,4 @@ Vector3 Enemy::GetWorldPosition() {
 	worldPos.z = worldTransform_.translation_.z;
 	return worldPos;
 }
+

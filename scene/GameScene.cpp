@@ -48,7 +48,7 @@ void GameScene::Initialize() {
 	//最初の雑魚
 	//AddEnemy({0.0f, 5.0f, 30.0f});
 
-	LoadEnemyPopDate();
+	//LoadEnemyPopDate();
 	//　敵の生成
 	//enemy_ = new Enemy();
 	//天球の生成
@@ -67,11 +67,37 @@ void GameScene::Initialize() {
 	railCamera_->Initialize({0.0f, 0.0f, 0.0f}, {0.0f,0.0f,0.0f});
 	// 自キャラとレールカメラの親子関係を結ぶ
 	player_->SetParent(&railCamera_->GetWorldTransform());
+
 	// 敵の初期化
+	// ステージ1
+	const int EnemyCount = 3;
+	const float offset = 2.0f;
+	// const float kEnemySpeed = 0.5f;
+	const float kEnemySpeed2 = -0.5f;
+
+	for (int i = 0; i < EnemyCount; ++i) {
+		Enemy* newEnemy = new Enemy();
+
+		// 各敵の初期位置を計算して設定
+		Vector3 enemypos = Vector3(0.0f, -0.0f, 15.0f + i * offset);
+
+		const float kEnemySpeed = 0.5f;
+		Vector3 velocity(kEnemySpeed, 0, 0);
+		// 二番目の敵の座標ずらし
+		if (i == 1) {
+			enemypos.x += 5;
+			velocity = Vector3(kEnemySpeed2, 0, 0);
+		}
+
+		newEnemy->Initialize(model_, enemypos, velocity);
+		enemy_.push_back(newEnemy); // 敵をリストや配列に追加
+	}
+
+		// 敵とレールカメラの親子関係
+	for (Enemy* enemy : enemy_) {
+		enemy->SetParent(&railCamera_->GetWorldTransform());
+	}
 	
-	//Vector3 velocity(-0.1f, 0.1f, -0.2f);
-	                          //敵の座標
-	//enemy_->Initialize(model_, {20,10,50}, velocity);
 	
 	//敵キャラにゲームシーンを渡す
 	//enemy_->SetGameScene(this);
@@ -90,7 +116,7 @@ void GameScene::Update() {
 	// 自キャラの更新
 	player_->Update(viewProjection_);
 
-	UpdateEnemyPopCommands();
+	//UpdateEnemyPopCommands();
 
 	debugCamera_->Update();
 
@@ -224,10 +250,10 @@ void GameScene::CheckAllCollisions() {
 
 			if (distance <= 2) {
 				// 敵キャラの衝突時コールバックを呼び出す
-				// enemy_->OnCollision();
+				 enemy->OnCollision();
 
 				// 自弾の衝突時コールバックを呼び出す
-				bullet->OnCollision();
+				//bullet->OnCollision();
 			}
 		}
 	}
