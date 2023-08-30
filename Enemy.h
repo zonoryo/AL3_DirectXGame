@@ -29,7 +29,7 @@ public:
 	Vector3 GetWorldPosition();
 	bool IsDead() const { return isDead_; }
 
-	
+	float GetRadius() const { return radius_; }
 
 private:
 	WorldTransform worldTransform_;
@@ -38,6 +38,6 @@ private:
 	// デスフラグ
 	bool isDead_ = false;
 
-	
+	float radius_;
 	
 };

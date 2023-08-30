@@ -14,6 +14,10 @@ public:
 	void OnCollision();
 
 	Vector3 GetWorldPosition();
+	float GetRadius() const { return radius_; }
+
+	// 親となるワールドトランスフォームをセット
+	void SetParent(const WorldTransform* parent);
 
 private:
 	WorldTransform worldTransform_;
@@ -25,4 +29,5 @@ private:
 	int32_t deathTimer_ = kLifeTime;
 	//デスフラグ
 	bool isDead_ = false;
+	float radius_= 5;
 };

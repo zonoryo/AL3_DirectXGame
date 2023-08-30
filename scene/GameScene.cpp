@@ -59,15 +59,16 @@ void GameScene::Initialize() {
 	//スカイドームの初期化
 	skydome_->Initialize(modelSkydome_);
 	//自キャラの初期化
-	Vector3 playerPosition(0, 0, 15);
+	Vector3 playerPosition(0, -5, 15);
 	player_->Initialize(model_, textureHandle_,playerPosition);
 	// レールカメラの生成
 	railCamera_ = new RailCamera();
 	//レールカメラ初期化
-	railCamera_->Initialize({0.0f, 0.0f, 0.0f}, {0.0f,0.0f,0.0f});
+	railCamera_->Initialize({0.0f, 0.0f, 0.0f});
 	// 自キャラとレールカメラの親子関係を結ぶ
 	player_->SetParent(&railCamera_->GetWorldTransform());
 
+	playerBullet_->SetParent(&railCamera_->GetWorldTransform());
 	// 敵の初期化
 	// ステージ1
 	const int EnemyCount = 3;
@@ -79,7 +80,7 @@ void GameScene::Initialize() {
 		Enemy* newEnemy = new Enemy();
 
 		// 各敵の初期位置を計算して設定
-		Vector3 enemypos = Vector3(0.0f, -0.0f, 15.0f + i * offset);
+		Vector3 enemypos = Vector3(0.0f, -5.0f, 20.0f + i * offset);
 
 		const float kEnemySpeed = 0.5f;
 		Vector3 velocity(kEnemySpeed, 0, 0);
@@ -109,6 +110,8 @@ void GameScene::Initialize() {
 
 	//enemy_->SetPlayer(player_);
 
+
+	
 }
 
 void GameScene::Update() {
@@ -160,7 +163,7 @@ void GameScene::Update() {
 		viewProjection_.TransferMatrix();
 	
 	}
-
+	
 }
 
 void GameScene::Draw() {
@@ -223,16 +226,15 @@ void GameScene::Draw() {
 }
 
 void GameScene::CheckAllCollisions() {
-	//判定対象AとBの座標
+	// 判定対象AとBの座標
 	Vector3 posA, posB;
-	//自弾リストの取得
+	// 自弾リストの取得
 	const std::list<PlayerBullet*>& playerBullets = player_->GetBullets();
-	
 
-	//#pragma region 自弾と敵キャラの当たり判定
+#pragma region 自弾と敵キャラの当たり判定
 	// 敵キャラの座標
 	for (Enemy* enemy : enemy_) {
-		//posA = enemy->GetWorldPosition();
+		// posA = enemy->GetWorldPosition();
 
 		// 敵キャラと敵弾全ての当たり判定
 		for (PlayerBullet* bullet : playerBullets) {
@@ -242,24 +244,20 @@ void GameScene::CheckAllCollisions() {
 
 			// 座標 A・B の距離を求める
 			Vector3 dis;
-			dis.x = posA.x - posB.x;
-			dis.y = posA.y - posB.y;
-			dis.z = posA.z - posB.z;
+			dis.x = (posB.x - posA.x) * (posB.x - posA.x);
+			dis.y = (posB.y - posA.y) * (posB.y - posA.y);
+			dis.z = (posB.z - posA.z) * (posB.z - posA.z);
+			float distance = dis.x + dis.y + dis.z;
 
-			float distance = sqrt((dis.x * dis.x) + (dis.y * dis.y) + (dis.z * dis.z));
-
-			if (distance <= 2) {
-				// 敵キャラの衝突時コールバックを呼び出す
-				 enemy->OnCollision();
-
-				// 自弾の衝突時コールバックを呼び出す
-				//bullet->OnCollision();
+			const float RadiusA = enemy->GetRadius();
+			const float RadiusB = bullet->GetRadius();
+			const float RadiusAB = (RadiusA + RadiusB) * (RadiusA + RadiusB);
+			if (distance <= RadiusAB) {
+				enemy->OnCollision();
 			}
 		}
+#pragma endregion
 	}
-    //#pragma endregion
-
-
 }
 
 //void GameScene::AddEnemy(Vector3 pos) {
