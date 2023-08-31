@@ -12,18 +12,18 @@
 /// <summary>
 /// タイトル
 /// </summary>
-class Title {
+class Info {
 
 public: // メンバ関数
 	/// <summary>
 	/// コンストクラタ
 	/// </summary>
-	Title();
+	Info();
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~Title();
+	~Info();
 
 	/// <summary>
 	/// 初期化
@@ -40,7 +40,6 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
-
 	bool GetTonext() { return toNext_; }
 
 private: // メンバ変数
@@ -53,6 +52,6 @@ private: // メンバ変数
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
-	
-    
+	/// 直切り替え防止カウント
+	int count;
 };

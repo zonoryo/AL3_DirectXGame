@@ -13,25 +13,25 @@
 
 #include "DebugCamera.h"
 #include "PlayerBullet.h"
-#include "RailCamera.h"
+#include "RailCamera2.h"
 #include "Skydome.h"
 #include <sstream>
 
 /// <summary>
 /// ゲームシーン
 /// </summary>
-class GameScene2 {
+class GameScene5 {
 
 public: // メンバ関数
 	/// <summary>
 	/// コンストクラタ
 	/// </summary>
-	GameScene2();
+	GameScene5();
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~GameScene2();
+	~GameScene5();
 
 	/// <summary>
 	/// 初期化
@@ -103,7 +103,7 @@ private: // メンバ変数
 
 	DebugCamera* debugCamera_ = nullptr;
 
-	RailCamera* railCamera_ = nullptr;
+	RailCamera2* railCamera_ = nullptr;
 
 	// std::stringstream enemyPopCommands;
 
@@ -112,6 +112,4 @@ private: // メンバ変数
 	int32_t waitTimer_;
 
 	int frameCounter_ = 0;
-
-
 };

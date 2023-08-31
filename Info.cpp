@@ -1,29 +1,36 @@
-﻿#include "Title.h"
+﻿#include "Info.h"
 #include "TextureManager.h"
 #include <cassert>
+#include "ImGuiManager.h"
+Info::Info() {}
 
+Info::~Info() { delete sprite_; }
 
-Title::Title() {}
-
-Title::~Title() { delete sprite_; }
-
-void Title::Initialize() {
+void Info::Initialize() {
 
 	dxCommon = DirectXCommon::GetInstance();
 	input = Input::GetInstance();
 	audio_ = Audio::GetInstance();
-	textureHandle_ = TextureManager::Load("OneShot.png");
+	textureHandle_ = TextureManager::Load("info.png");
 	sprite_ = Sprite::Create(textureHandle_, {0, 0});
-	
+	count = 60;
 }
 
-void Title::Update() {
-	if (input->TriggerKey(DIK_RETURN)) {
-		toNext_ = true;
+void Info::Update() {
+	count--;
+	if (count <= 0) {
+
+		if (input->TriggerKey(DIK_RETURN)) {
+			toNext_ = true;
+		}
 	}
+	ImGui::Begin("Camera");
+	
+	ImGui::Text("Count: %d", count); 
+	ImGui::End();
 }
 
-void Title::Draw() {
+void Info::Draw() {
 
 	// コマンドリストの取得
 	ID3D12GraphicsCommandList* commandList = dxCommon->GetCommandList();

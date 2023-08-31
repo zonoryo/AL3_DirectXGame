@@ -114,11 +114,15 @@
     <ClCompile Include="GameClear.cpp" />
     <ClCompile Include="GameScene2.cpp" />
     <ClCompile Include="GameScene3.cpp" />
+    <ClCompile Include="GameScene4.cpp" />
+    <ClCompile Include="GameScene5.cpp" />
+    <ClCompile Include="Info.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix4x4.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerBullet.cpp" />
     <ClCompile Include="RailCamera.cpp" />
+    <ClCompile Include="RailCamera2.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="Skydome.cpp" />
     <ClCompile Include="Title.cpp" />
@@ -152,6 +156,9 @@
     <ClInclude Include="GameClear.h" />
     <ClInclude Include="GameScene2.h" />
     <ClInclude Include="GameScene3.h" />
+    <ClInclude Include="GameScene4.h" />
+    <ClInclude Include="GameScene5.h" />
+    <ClInclude Include="Info.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="math\Matrix4x4.h" />
     <ClInclude Include="math\Vector2.h" />
@@ -161,6 +168,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerBullet.h" />
     <ClInclude Include="RailCamera.h" />
+    <ClInclude Include="RailCamera2.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="Skydome.h" />
