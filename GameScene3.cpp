@@ -80,7 +80,7 @@ void GameScene3::Initialize() {
 		// 各敵の初期位置を計算して設定
 		Vector3 enemypos = Vector3(0.0f, -5.0f, 20.0f + i * offset);
 
-		const float kEnemySpeed = 0.2f;
+		const float kEnemySpeed = 0.5f;
 		Vector3 velocity(kEnemySpeed, 0, 0);
 		// 二番目の敵の座標ずらし
 		if (i == 1||i == 3) {

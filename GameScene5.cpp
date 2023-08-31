@@ -69,19 +69,19 @@ void GameScene5::Initialize() {
 	// playerBullet_->SetParent(&railCamera_->GetWorldTransform());
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/// 敵の初期化
-	// ステージ1
+	// ステージ5
 	const int EnemyCount = 5;
 	const float offset = 2.0f;
 	// const float kEnemySpeed = 0.5f;
-	const float kEnemySpeed2 = -0.3f;
-	const float kEnemySpeed3 = 0.4f;
+	const float kEnemySpeed2 = -0.4f;
+	const float kEnemySpeed3 = 0.6f;
 	for (int i = 0; i < EnemyCount; ++i) {
 		Enemy* newEnemy = new Enemy();
 
 		// 各敵の初期位置を計算して設定
 		Vector3 enemypos = Vector3(0.0f, -5.0f, 20.0f + i * offset);
 
-		const float kEnemySpeed = 0.1f;
+		const float kEnemySpeed = 0.2f;
 		Vector3 velocity(kEnemySpeed, 0, 0);
 		// 二番目の敵の座標ずらし
 		if (i == 1 || i == 3) {

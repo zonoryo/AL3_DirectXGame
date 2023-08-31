@@ -42,10 +42,10 @@ void RailCamera2::Update() {
 	viewProjection_.matView = Inverse(worldTransform_.matWorld_);
 	viewProjection_.TransferMatrix();
 
-	ImGui::Begin("Camera");
-	// スライダーでカメラのtranslationを表示
-	ImGui::SliderFloat3("translation", &worldTransform_.translation_.x, 0.01f, 100.0f);
-	// スライダーでカメラのrotationを表示
-	ImGui::SliderFloat3("rotation", &worldTransform_.rotation_.x, 0.01f, 100.0f);
-	ImGui::End();
+	//ImGui::Begin("Camera");
+	//// スライダーでカメラのtranslationを表示
+	//ImGui::SliderFloat3("translation", &worldTransform_.translation_.x, 0.01f, 100.0f);
+	//// スライダーでカメラのrotationを表示
+	//ImGui::SliderFloat3("rotation", &worldTransform_.rotation_.x, 0.01f, 100.0f);
+	//ImGui::End();
 }

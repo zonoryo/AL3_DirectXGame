@@ -73,7 +73,7 @@ void GameScene4::Initialize() {
 	const int EnemyCount = 3;
 	const float offset = 2.0f;
 	// const float kEnemySpeed = 0.5f;
-	const float kEnemySpeed2 = -0.3f;
+	const float kEnemySpeed2 = -0.6f;
 
 	for (int i = 0; i < EnemyCount; ++i) {
 		Enemy* newEnemy = new Enemy();

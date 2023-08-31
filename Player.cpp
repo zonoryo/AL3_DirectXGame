@@ -20,6 +20,8 @@ void Player::Initialize(Model* model, uint32_t textureHandle, Vector3 pos) {
 	//レティクルのテクスチャ
 	TextureManager::Load("target.png");
 
+	textureHandle2_ = TextureManager::Load("cube.jpg");
+
 }
 
 void Player::Update(ViewProjection& viewProjection) {
@@ -123,7 +125,7 @@ void Player::Update(ViewProjection& viewProjection) {
 	//スプライトのレティクルに座標設定
 	sprite2DReticle_->SetPosition(Vector2(positionReticle.x, positionReticle.y));
 	// キャラクターの座標を表示
-	ImGui::SetNextWindowPos({60, 60});
+	/*ImGui::SetNextWindowPos({60, 60});
 	ImGui::SetNextWindowContentSize({300, 100});
 
 	ImGui::Begin("Player");
@@ -132,7 +134,7 @@ void Player::Update(ViewProjection& viewProjection) {
 	    worldTransform_.translation_.z};
 	ImGui::SliderFloat3("position", sliderValue, -20.0f, 20.0f);
 	worldTransform_.translation_ = {sliderValue[0], sliderValue[1], sliderValue[2]};
-	ImGui::End();
+	ImGui::End();*/
 }
 
 void Player::Draw(ViewProjection&viewProjection) {
@@ -143,7 +145,7 @@ void Player::Draw(ViewProjection&viewProjection) {
 		bullet->Draw(viewProjection);
 	}
 
-	model_->Draw(worldTransform3DReticle_, viewProjection);
+	model_->Draw(worldTransform3DReticle_, viewProjection, textureHandle2_);
 }
 
 

@@ -17,6 +17,7 @@ void Info::Initialize() {
 }
 
 void Info::Update() {
+	//飛ばされないためのカウント
 	count--;
 	if (count <= 0) {
 
@@ -24,10 +25,10 @@ void Info::Update() {
 			toNext_ = true;
 		}
 	}
-	ImGui::Begin("Camera");
+	/*ImGui::Begin("Camera");
 	
 	ImGui::Text("Count: %d", count); 
-	ImGui::End();
+	ImGui::End();*/
 }
 
 void Info::Draw() {

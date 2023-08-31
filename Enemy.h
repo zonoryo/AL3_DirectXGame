@@ -35,6 +35,10 @@ private:
 	WorldTransform worldTransform_;
 	Model* model_;
 	uint32_t texturehandle_;
+
+
+	bool shrinkFlag_ = false;
+	float shrinkSpeed_ = 0.1f; // 縮小速度
 	// デスフラグ
 	bool isDead_ = false;
 

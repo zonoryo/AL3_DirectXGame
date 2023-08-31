@@ -71,7 +71,7 @@ void GameScene2::Initialize() {
 	///敵の初期化
 	// ステージ2
 	const int EnemyCount = 3;
-	const float offset = 2.0f;
+	const float offset = 3.0f;
 	// const float kEnemySpeed = 0.5f;
 	const float kEnemySpeed2 = -0.5f;
 
