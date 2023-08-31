@@ -37,7 +37,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int scene = 0;
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
-	win->CreateGameWindow(L"GC2B_06_ドウゾノ_リョウタ_AL3");
+	win->CreateGameWindow(L"OneShot");
 
 	// DirectX初期化処理
 	dxCommon = DirectXCommon::GetInstance();
