@@ -73,7 +73,7 @@ void Player::Update(ViewProjection& viewProjection) {
 	}
 
 	// 範囲制限
-	const float kMoveLimitX = 34.0f;
+	const float kMoveLimitX = 10.0f;
 	const float kMoveLimitY = 18.0f;
 
 	// 範囲を超えない処理
