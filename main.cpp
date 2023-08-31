@@ -126,7 +126,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		if (scene == 1) {
 			info->Update();
 			if (info->GetTonext()) {
-				scene = 6;
+				scene = 2;
 			}
 		}
 		//ステージ1
