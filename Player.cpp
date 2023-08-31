@@ -51,11 +51,11 @@ void Player::Update(ViewProjection& viewProjection) {
 	}
 
 	// 移動ベクトルの変更(上下)
-	if (input_->PushKey(DIK_UP)) {
+	/*if (input_->PushKey(DIK_UP)) {
 		move.y += kCharacterSpeed;
 	} else if (input_->PushKey(DIK_DOWN)) {
 		move.y -= kCharacterSpeed;
-	}
+	}*/
 	//旋回
 	const float kRotSpeed = 0.02f;
 

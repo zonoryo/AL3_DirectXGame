@@ -2,6 +2,10 @@
 #include "AxisIndicator.h"
 #include "DirectXCommon.h"
 #include "GameScene.h"
+#include "GameScene2.h"
+#include "GameScene3.h"
+//#include "GameScene4.h"
+//#include "GameScene5.h"
 #include "ImGuiManager.h"
 #include "PrimitiveDrawer.h"
 #include "TextureManager.h"
@@ -20,6 +24,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	AxisIndicator* axisIndicator = nullptr;
 	PrimitiveDrawer* primitiveDrawer = nullptr;
 	GameScene* gameScene = nullptr;
+	GameScene2* gameScene2 = nullptr;
+	GameScene3* gameScene3 = nullptr;
+	//GameScene4* gameScene4 = nullptr;
+	//GameScene5* gameScene5 = nullptr;
 	Title* title = nullptr;
 	GameClear* gameClear=nullptr;
 	failed* Failed = nullptr;
@@ -87,35 +95,131 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			//初期化
 			gameScene = new GameScene();
 			gameScene->Initialize();
+			gameScene2 = new GameScene2();
+			gameScene2->Initialize();
+			gameScene3 = new GameScene3();
+			gameScene3->Initialize();
+			//gameScene4 = new GameScene4();
+			//gameScene4->Initialize();
+			//gameScene5 = new GameScene5();
+			//gameScene5->Initialize();
 			title = new Title();
 			title->Initialize();
 			gameClear = new GameClear();
 			gameClear->Initialize();
 			Failed = new failed();
 			Failed->Initialize();
+
 			title->Update();
 			if (title->GetTonext()) {
-				scene = 1;
+				scene = 2;
 			}
 		}
-		if (scene == 1) {
+		//ステージ1
+		if (scene == 2) {
 			// ゲームシーンの毎フレーム処理
 			gameScene->Update();
 			if (gameScene->GetTonext()) {
-				scene = 2;
+				gameScene2 = new GameScene2();
+				gameScene2->Initialize();
+				scene = 3;
 			}
 			if (gameScene->GetNonext()) {
 				Failed->Update();
 				if (Failed->GetTonext()) {
-					scene = 0;
+					gameScene = new GameScene();
+					gameScene->Initialize();
+					Failed = new failed();
+					Failed->Initialize();
+					scene = 2;
 				}
 			}
 		}
-		if (scene == 2) {
+		// ステージ2
+		if (scene == 3) {
+			// ゲームシーンの毎フレーム処理
+			gameScene2->Update();
+			if (gameScene2->GetTonext()) {
+				gameScene3 = new GameScene3();
+				gameScene3->Initialize();
+				scene = 4;
+			}
+			if (gameScene2->GetNonext()) {
+				Failed->Update();
+				if (Failed->GetTonext()) {
+					gameScene = new GameScene();
+					gameScene->Initialize();
+					gameScene2 = new GameScene2();
+					gameScene2->Initialize();
+					Failed = new failed();
+					Failed->Initialize();
+					scene = 2;
+				}
+			}
+		}
+		// ステージ3
+		if (scene == 4) {
+			// ゲームシーンの毎フレーム処理
+			gameScene3->Update();
+			if (gameScene3->GetTonext()) {
+				//gameScene4 = new GameScene4();
+				//gameScene4->Initialize();
+				scene = 5;
+			}
+			if (gameScene3->GetNonext()) {
+				Failed->Update();
+				if (Failed->GetTonext()) {
+					gameScene2 = new GameScene2();
+					gameScene2->Initialize();
+					gameScene3 = new GameScene3();
+					gameScene3->Initialize();
+					Failed = new failed();
+					Failed->Initialize();
+					scene = 3;
+				}
+			}
+		}
+		//// ステージ4
+		//if (scene == 5) {
+		//	// ゲームシーンの毎フレーム処理
+		//	gameScene4->Update();
+		//	if (gameScene4->GetTonext()) {
+		//		scene = 7;
+		//	}
+		//	if (gameScene4->GetNonext()) {
+		//		Failed->Update();
+		//		if (Failed->GetTonext()) {
+		//			gameScene4 = new GameScene4();
+		//			gameScene4->Initialize();
+		//			Failed = new failed();
+		//			Failed->Initialize();
+		//			scene = 5;
+		//		}
+		//	}
+		//}
+		//// ステージ5
+		//if (scene == 6) {
+		//	// ゲームシーンの毎フレーム処理
+		//	gameScene5->Update();
+		//	if (gameScene5->GetTonext()) {
+		//		scene = 7;
+		//	}
+		//	if (gameScene5->GetNonext()) {
+		//		Failed->Update();
+		//		if (Failed->GetTonext()) {
+		//			gameScene5 = new GameScene5();
+		//			gameScene5->Initialize();
+		//			Failed = new failed();
+		//			Failed->Initialize();
+		//			scene = 6;
+		//		}
+		//	}
+		//}
+
+		if (scene == 7) {
 			gameClear->Update();
 			if (gameClear->GetTonext()) {
 				scene = 0;
-			
 			}
 		}
 		
@@ -132,17 +236,34 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			// タイトルの描画
 			title->Draw();
 		}
-		if (scene == 1) {
-			// ゲームシーンの描画
+		if (scene == 2) {
+			// ゲームシーンの描画1
 			gameScene->Draw();
 		}
-		if (scene == 2) {
+		if (scene == 3) {
+			// ゲームシーンの描画1
+			gameScene2->Draw();
+		}
+		if (scene == 4) {
+			// ゲームシーンの描画1
+			gameScene3->Draw();
+		}
+		//if (scene == 5) {
+		//	// ゲームシーンの描画1
+		//	gameScene4->Draw();
+		//}
+		//if (scene == 6) {
+		//	// ゲームシーンの描画1
+		//	gameScene5->Draw();
+		//}
+		if (scene == 7) {
 		   //ゲームクリアの描画
 			gameClear->Draw();
 		}
-		if (gameScene->GetNonext()) {
+		if (gameScene->GetNonext() || gameScene2->GetNonext()|| gameScene3->GetNonext()) {
 			Failed->Draw();
 		}
+		
 
 		
 		// 軸表示の描画

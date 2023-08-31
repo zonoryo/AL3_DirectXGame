@@ -7,7 +7,7 @@
 void Enemy::Initialize(Model* model, const Vector3& pos, const Vector3& velocity) {
 	assert(model);
 	model_ = model;
-	texturehandle_ = TextureManager::Load("cube.jpg");
+	texturehandle_ = TextureManager::Load("box.png");
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = pos;
 	velocity_ = velocity;
@@ -18,7 +18,7 @@ void Enemy::Update() {
 	worldTransform_.translation_.x -= velocity_.x;
 	worldTransform_.translation_.y -= velocity_.y;
 	worldTransform_.translation_.z -= velocity_.z;
-	if (worldTransform_.translation_.x > 40 || worldTransform_.translation_.x < -40) {
+	if (worldTransform_.translation_.x > 15 || worldTransform_.translation_.x < -15) {
 		velocity_.x *= -1;
 	}
 	worldTransform_.UpdateMatrix();
